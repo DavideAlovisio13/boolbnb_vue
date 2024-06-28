@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h1 class="text-center">La Molisana</h1>
-    <i class="fas fa-spinner fa-pulse"></i>
+    <AppHeaderComponent />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import AppHeaderComponent from './components/AppHeaderComponent.vue';
   export default {
     name: 'App',
+    components: {
+      AppHeaderComponent,
+    }
   }
 </script>
 
