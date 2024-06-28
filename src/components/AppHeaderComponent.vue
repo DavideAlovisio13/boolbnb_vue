@@ -2,7 +2,7 @@
     <div>
         
         <nav>
-            <a href="http://localhost:8000">registrati</a>
+            <a href="http://localhost:8000/register">registrati</a>
         </nav>
     </div>
 </template>
