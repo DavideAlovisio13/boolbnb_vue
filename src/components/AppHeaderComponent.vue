@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <nav>
             <a href="http://localhost:8000">registrati</a>
         </nav>
@@ -10,7 +11,9 @@
     export default {
         name: 'AppHeaderComponent',
         data() {
-            
+            return {
+                
+            }
         },
     }
 </script>
