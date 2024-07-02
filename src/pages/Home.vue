@@ -3,8 +3,8 @@
         <JumboComponent />
         <div class="container text-center mt-5">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div class="col" v-for="(item, index) in store.apartments" :key="index">
-                    <CardApComponent :apartments="item"/>
+                <div class="col m-5" v-for="(item, index) in store.apartments" :key="index">
+                    <CardApComponent :apartment="item" :index="index" :title="item.title" :image="item.cover_image" :key="index"/>
                 </div>
             </div>
         </div>
@@ -27,17 +27,13 @@ export default {
             store
         }
     },
-    computed: {
-        async getApartments() {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/api/apartments');
-                this.store.apartments = response.data.results;
-                console.log(this.store.apartments);
-            } catch (error) {
-                console.error('Error fetching apartments:', error);
-            }
+    methods: {
+        getApartments() {
+            axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
+                this.store.apartments = response.data.results
+                console.log(this.store.apartments)
+            })
         }
-
     },
     mounted() {
         this.getApartments();

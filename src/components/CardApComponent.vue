@@ -9,7 +9,7 @@
                         </path>
                     </svg>
                 </div>
-                <div class="brutalist-card__alert">Warning</div>
+                <div class="brutalist-card__alert"> {{ title }}</div>
             </div>
             <div class="brutalist-card__message">
                 This is a brutalist card with a very angry button. Proceed with caution,
@@ -27,6 +27,7 @@
 <script>
 export default {
     name: 'CardApComponent',
+    props: ['apartment', 'index', 'title', 'image']
 }
 </script>
 
@@ -133,10 +134,10 @@ export default {
 }
 
 .brutalist-card__button--mark:hover {
-    background-color: #296fbb;
-    border-color: #296fbb;
+    background-color: black;
+    border-color: white;
     color: #fff;
-    box-shadow: 7px 7px 0 #004280;
+    box-shadow: 7px 7px 0 black;
 }
 
 .brutalist-card__button--read:hover {
