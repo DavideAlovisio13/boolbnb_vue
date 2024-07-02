@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name:'ContactsComponent',
+        name:'Contacts',
     }
 </script>
 

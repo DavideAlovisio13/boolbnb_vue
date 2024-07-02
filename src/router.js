@@ -1,36 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AppHome from './components/AppHome.vue';
-import StructuresComponent from './pages/StructuresComponent.vue';
-import AboutUsComponent from './pages/AboutUsComponent.vue';
-import ContactsComponent from './pages/ContactsComponent.vue';
-import AdvanceSearchComponent from './pages/AdvanceSearchComponent.vue';
+import Home from './pages/Home.vue';
+import Structures from './pages/Structures.vue';
+import AboutUs from './pages/AboutUs.vue';
+import Contacts from './pages/Contacts.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
             name: 'home',
-            component: AppHome
+            component: Home,
         },
         {
             path: '/structures',
             name: 'structures',
-            component: StructuresComponent
+            component: Structures,
         },
         {
             path: '/about',
             name:'about',
-            component: AboutUsComponent
+            component: AboutUs,
         },
         {
             path:'/contacts',
             name:'contacts',
-            component: ContactsComponent
-        },
-        {
-            path:'/search',
-            name: 'search',
-            component: AdvanceSearchComponent
+            component: Contacts,
         }
     ]
 });

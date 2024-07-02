@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name:'StructuresComponent',
+        name:'Structures',
     }
 </script>
 
