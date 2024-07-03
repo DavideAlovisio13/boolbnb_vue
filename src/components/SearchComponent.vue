@@ -16,27 +16,51 @@
 
 <script>
 import { store } from '@/store';
+import axios from 'axios';
+
 export default {
     name: 'Search',
     data() {
         return {
             searchQuery: '',
-            items: store.apartments,
+            items: [],
             filteredItems: [],
             notFound: 'Nessun risultato trovato'
         }
     },
     methods: {
-        performSearch() {
-            this.filteredItems = this.items.filter(item =>
-                item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-            );
+        async performSearch() {
+            if (this.searchQuery.length < 5) {
+                this.filteredItems = [];
+                return;
+            }
+
+            try {
+                const response = await axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
+                    params: {
+                        key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
+                        radius: 20000,  // 20 km in metri
+                        limit: 5,
+                        //lat: 'LATITUDE', // Latitudine del centro della ricerca
+                        //lon: 'LONGITUDE' // Longitudine del centro della ricerca
+                    }
+                });
+                this.filteredItems = response.data.results.map(item => ({
+                    id: item.id,
+                    address: item.address.freeformAddress,
+                    position: item.position
+                }));
+                console.log('Risultati della ricerca:', this.filteredItems);
+            } catch (error) {
+                console.error('Errore durante la ricerca:', error);
+            }
         }
     },
     mounted() {
         this.filteredItems = this.items;
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
