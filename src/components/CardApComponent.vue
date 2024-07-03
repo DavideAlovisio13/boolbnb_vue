@@ -2,8 +2,9 @@
     <div>
         <div class="brutalist-card">
             <div class="brutalist-card__header">
-                <div class="brutalist-card__alert">{{ title }}</div>
+                <div class="brutalist-card__alert">fr{{ title }}</div>
             </div>
+            <img :src="imageUrl" :alt="title" class="brutalist-card__image">
             <div class="brutalist-card__message">
                 This is a brutalist card with a very angry button. Proceed with caution,
                 you've been warned.
@@ -13,14 +14,18 @@
                 <a class="brutalist-card__button brutalist-card__button--read" href="#">Okay</a>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
 export default {
     name: 'CardApComponent',
-    props: ['apartment', 'index', 'title', 'image']
+    props: ['apartment', 'index', 'title', 'image'],
+    computed: {
+        imageUrl() {
+            return this.image ? `http://127.0.0.1:8000/storage/${this.image}` : 'https://via.placeholder.com/320x240';
+        }
+    }
 }
 </script>
 
@@ -63,6 +68,12 @@ export default {
     color: #000;
     font-size: 1.5rem;
     text-transform: uppercase;
+}
+
+.brutalist-card__image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
 }
 
 .brutalist-card__message {
