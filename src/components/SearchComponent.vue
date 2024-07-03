@@ -2,7 +2,7 @@
     <div>
         <div class="input-container">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
-                @input="performSearch" />
+                @input="performSearch" @keyup.enter="performSearch" />
         </div>
         <div v-if="searchQuery" class="search-results">
             <ul v-if="filteredItems.length" class="list-unstyled">
