@@ -1,25 +1,30 @@
 <template>
     <div>
-        <div class="input-container">
+        <div class="input-container d-flex">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
                 @input="performSearch" @keyup.enter="performSearch" />
+            <span class="ms-3 d-flex justify-content-center align-items-center">
+                <button @click="navigateToSearch" class="nav-link pt-3">{{ 'Search' }}</button>
+            </span>
         </div>
         <div v-if="searchQuery" class="search-results">
             <ul v-if="filteredItems.length" class="list-unstyled">
-                <li v-for="item in filteredItems" :key="item.id">{{ item.address }}</li>
+                <li v-for="item in filteredItems" :key="item.id" @click="selectItem(item)">
+                    {{ item.address }}
+                </li>
             </ul>
             <p v-else>{{ notFound }}</p>
         </div>
-        <router-link :to="{ name: 'search' }" class="nav-link pt-3">{{ 'Search' }}</router-link>
     </div>
 </template>
+
 
 <script>
 import { store } from '@/store';
 import axios from 'axios';
 
 export default {
-    name: 'Search',
+    name: 'SearchComponent',
     data() {
         return {
             searchQuery: '',
@@ -30,7 +35,7 @@ export default {
     },
     methods: {
         async performSearch() {
-            if (this.searchQuery.length < 5) {
+            if (this.searchQuery < 2) {
                 this.filteredItems = [];
                 return;
             }
@@ -41,6 +46,7 @@ export default {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
                         limit: 5,
+                        countrySet: 'IT',
                         //lat: 'LATITUDE', // Latitudine del centro della ricerca
                         //lon: 'LONGITUDE' // Longitudine del centro della ricerca
                     }
@@ -54,6 +60,13 @@ export default {
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
+        },
+        selectItem(item) {
+            this.searchQuery = item.address;
+            this.filteredItems = [];
+        },
+        navigateToSearch() {
+            this.$router.push({ name: 'search', params: { query: this.searchQuery } });
         }
     },
     mounted() {
@@ -65,7 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-    width: 100%;
+    width: 500px;
     max-width: 270px;
     height: 60px;
     padding: 12px;
@@ -116,6 +129,11 @@ export default {
     border: 3px solid #000;
     border-top: none;
     box-shadow: 5px 5px 0 #000;
+
+    li {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
 }
 
 .list-unstyled {

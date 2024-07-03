@@ -7,3 +7,5 @@ export const store = reactive({
   service: [],
   user: []
 });
+
+console.log(store.search)

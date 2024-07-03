@@ -28,7 +28,7 @@ const router = createRouter({
             component: Contacts,
         },
         {
-            path:'/search',
+            path:'/search/:query',
             name:'search',
             component: Search,
         }
