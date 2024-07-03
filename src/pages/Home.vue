@@ -4,7 +4,7 @@
         <div class="container text-center mt-5">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col m-5" v-for="(item, index) in store.apartments" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.title" :image="item.cover_image" :key="index"/>
+                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image" :key="index"/>
                 </div>
             </div>
         </div>

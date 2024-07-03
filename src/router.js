@@ -3,6 +3,7 @@ import Home from './pages/Home.vue';
 import Structures from './pages/Structures.vue';
 import AboutUs from './pages/AboutUs.vue';
 import Contacts from './pages/Contacts.vue';
+import Search from './pages/Search.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -25,7 +26,13 @@ const router = createRouter({
             path:'/contacts',
             name:'contacts',
             component: Contacts,
+        },
+        {
+            path:'/search',
+            name:'search',
+            component: Search,
         }
+
     ]
 });
 export { router };
