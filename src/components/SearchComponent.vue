@@ -66,8 +66,8 @@ export default {
 }
 
 .input:focus {
-    background-color: #000;
-    color: #fff;
+    background-color: #e9b50b;
+    color: #000;
     border-color: #ffffff;
 }
 
