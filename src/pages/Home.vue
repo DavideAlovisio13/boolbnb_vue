@@ -3,9 +3,12 @@
         <JumboComponent />
         <div class="container text-center mt-5">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div class="col m-5" v-for="(item, index) in store.apartments" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image" :key="index"/>
+                <div class="col m-5" v-for="(item, index) in store.sponsored" :key="index">
+                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds" :key="index"/>
                 </div>
+                <!-- <div class="col m-5" v-for="(item, index) in store.apartments" :key="index">
+                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds" :key="index"/>
+                </div> -->
             </div>
         </div>
     </div>
@@ -33,10 +36,18 @@ export default {
                 this.store.apartments = response.data.results
                 console.log(this.store.apartments)
             })
+        },
+        getSponsored(){
+            axios.get('http://127.0.0.1:8000/api/apartments/sponsored').then((response) => {
+                this.store.sponsored = response.data
+                console.log(this.store.sponsored)
+            })
         }
     },
+
     mounted() {
         this.getApartments();
+        this.getSponsored();
     }
 }
 </script>
