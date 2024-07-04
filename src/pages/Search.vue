@@ -1,4 +1,5 @@
 <template>
+
     <div class="container text-center mt-5">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col m-5" v-for="(item, index) in apartments" :key="index">
@@ -69,3 +70,4 @@ export default {
     list-style: none;
 }
 </style>
+
