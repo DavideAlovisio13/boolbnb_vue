@@ -32,7 +32,7 @@ export default {
             fetch(`http://127.0.0.1:8000/api/apartments/${this.id}`)
                 .then(response => response.json())
                 .then(data => {
-                    this.apartment = data;
+                    this.apartment = data.results;
                 });
         }
     }

@@ -2,7 +2,7 @@
     <div>
         <div class="brutalist-card">
             <div class="brutalist-card__header">
-                <div class="brutalist-card__alert">fr{{ title }}</div>
+                <div class="brutalist-card__alert">{{ title }}</div>
             </div>
             <img :src="imageUrl" :alt="title" class="brutalist-card__image">
             <div class="brutalist-card__message">
@@ -10,8 +10,7 @@
                 you've been warned.
             </div>
             <div class="brutalist-card__actions">
-                <a class="brutalist-card__button brutalist-card__button--mark" href="#">Mark as Read</a>
-                <a class="brutalist-card__button brutalist-card__button--read" href="#">Okay</a>
+                <router-link :to="{ name: 'apartment-detail', params: { id: apartment.id } }" class="brutalist-card__button brutalist-card__button--read">Okay</router-link>
             </div>
         </div>
     </div>
@@ -23,6 +22,7 @@ export default {
     props: ['apartment', 'index', 'title', 'image'],
     computed: {
         imageUrl() {
+            console.log('Image prop:', this.image);
             return this.image ? `http://127.0.0.1:8000/storage/${this.image}` : 'https://via.placeholder.com/320x240';
         }
     }
