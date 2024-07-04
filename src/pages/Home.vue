@@ -29,22 +29,10 @@ export default {
         }
     },
     methods: {
-        getApartments() {
-            axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
-                this.store.apartments = response.data.results;
-                console.log('Apartments:', this.store.apartments);
-            })
-        },
-        getSponsored() {
-            axios.get('http://127.0.0.1:8000/api/apartments/sponsored').then((response) => {
-                this.store.sponsored = response.data.results;
-                console.log('Sponsored Apartments:', this.store.sponsored);
-            })
-        }
     },
     mounted() {
-        this.getApartments();
-        this.getSponsored();
+        store.methods.apiGetApart();
+        store.methods.apiGetSponsored();
     }
 }
 </script>
