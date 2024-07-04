@@ -24,6 +24,8 @@ export default {
     data() {
         return {
             apartments: [],
+            latitude: null,
+            longitude: null
         }
     },
     methods: {
