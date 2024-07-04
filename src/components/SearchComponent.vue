@@ -18,9 +18,7 @@
     </div>
 </template>
 
-
 <script>
-import { store } from '@/store';
 import axios from 'axios';
 
 export default {
@@ -30,12 +28,14 @@ export default {
             searchQuery: '',
             items: [],
             filteredItems: [],
-            notFound: 'Nessun risultato trovato'
+            notFound: 'Nessun risultato trovato',
+            lat: null,
+            lon: null
         }
     },
     methods: {
         async performSearch() {
-            if (this.searchQuery < 2) {
+            if (this.searchQuery.length < 2) {
                 this.filteredItems = [];
                 return;
             }
@@ -45,7 +45,7 @@ export default {
                     params: {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
-                        limit: 1,
+                        limit: 10,
                         countrySet: 'IT',
                     }
                 });
@@ -55,31 +55,44 @@ export default {
                     lat: item.position.lat,
                     lon: item.position.lon
                 }));
-                //console.log(response.data.results);
-                //console.log('filteredItems:', this.filteredItems);
-                //console.log('Risultati della ricerca:', this.filteredItems);
+
+                // Emmetti l'evento per aggiornare i risultati
+                if (this.filteredItems.length > 0) {
+                    this.$emit('search-performed', {
+                        query: this.searchQuery,
+                        latitude: this.filteredItems[0].lat,
+                        longitude: this.filteredItems[0].lon
+                    });
+                }
+
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
         },
-          
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
             this.lon = item.lon;
             this.filteredItems = [];
+            this.$emit('search-performed', {
+                query: this.searchQuery,
+                latitude: this.lat,
+                longitude: this.lon
+            });
         },
         navigateToSearch() {
+            this.$emit('search-performed', {
+                query: this.searchQuery,
+                latitude: this.lat,
+                longitude: this.lon
+            });
             this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         }
     },
     mounted() {
         this.filteredItems = this.items;
-        
-
     }
 }
-
 </script>
 
 <style lang="scss" scoped>
