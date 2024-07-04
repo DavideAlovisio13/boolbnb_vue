@@ -45,16 +45,16 @@ export default {
                     params: {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
-                        limit: 5,
+                        limit: 1,
                         countrySet: 'IT',
-                        //lat: 'LATITUDE', // Latitudine del centro della ricerca
-                        //lon: 'LONGITUDE' // Longitudine del centro della ricerca
+                        
                     }
                 });
                 this.filteredItems = response.data.results.map(item => ({
                     id: item.id,
                     address: item.address.freeformAddress,
-                    position: item.position
+                    lat: item.position.lat,
+                    lon: item.position.lon
                 }));
                 console.log('Risultati della ricerca:', this.filteredItems);
             } catch (error) {
@@ -63,10 +63,12 @@ export default {
         },
         selectItem(item) {
             this.searchQuery = item.address;
+            this.lat = item.lat;
+            this.lon = item.lon;
             this.filteredItems = [];
         },
         navigateToSearch() {
-            this.$router.push({ name: 'search', params: { query: this.searchQuery } });
+            this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         }
     },
     mounted() {

@@ -30,7 +30,7 @@ const router = createRouter({
         component: Contacts,
     },
     {
-        path: '/search/:query',
+        path: '/search/:query/:lat/:lon',
         name: 'search',
         component: Search,
     },
