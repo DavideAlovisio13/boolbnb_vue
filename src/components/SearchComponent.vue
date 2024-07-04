@@ -47,7 +47,6 @@ export default {
                         radius: 20000,  // 20 km in metri
                         limit: 1,
                         countrySet: 'IT',
-                        
                     }
                 });
                 this.filteredItems = response.data.results.map(item => ({
@@ -56,11 +55,24 @@ export default {
                     lat: item.position.lat,
                     lon: item.position.lon
                 }));
+                console.log(response.data.results);
+                console.log('filteredItems:', this.filteredItems);
                 console.log('Risultati della ricerca:', this.filteredItems);
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
         },
+        //  async search() {
+        //      try{
+        //          const res = await axios.post('http://127.0.0.1:8000/api/apartments/search', {
+        //             params: {
+        //                 address: filteredItems.address,
+        //                 lat: filteredItems.lat,
+        //                 lon: filteredItems.lon
+        //             }
+        //          })
+        //      }
+        //  }
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
