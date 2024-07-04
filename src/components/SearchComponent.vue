@@ -7,13 +7,12 @@
                 <button @click="navigateToSearch" class="nav-link pt-3">{{ 'Search' }}</button>
             </span>
         </div>
-        <div v-if="searchQuery" class="search-results">
+        <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
             <ul v-if="filteredItems.length" class="list-unstyled">
                 <li v-for="item in filteredItems" :key="item.id" @click="selectItem(item)">
                     {{ item.address }}
                 </li>
             </ul>
-            <p  :class="{ 'not-found': filteredItems.length}"v-else>{{ notFound }}</p>
         </div>
     </div>
 </template>
