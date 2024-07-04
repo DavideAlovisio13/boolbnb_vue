@@ -62,17 +62,7 @@ export default {
                 console.error('Errore durante la ricerca:', error);
             }
         },
-        //  async search() {
-        //      try{
-        //          const res = await axios.post('http://127.0.0.1:8000/api/apartments/search', {
-        //             params: {
-        //                 address: filteredItems.address,
-        //                 lat: filteredItems.lat,
-        //                 lon: filteredItems.lon
-        //             }
-        //          })
-        //      }
-        //  }
+          
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
@@ -85,6 +75,9 @@ export default {
     },
     mounted() {
         this.filteredItems = this.items;
+        this.search();
+        console.log('Search:', store.search);
+
     }
 }
 
