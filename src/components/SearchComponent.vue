@@ -47,7 +47,6 @@ export default {
                         radius: 20000,  // 20 km in metri
                         limit: 1,
                         countrySet: 'IT',
-                        
                     }
                 });
                 this.filteredItems = response.data.results.map(item => ({
@@ -56,11 +55,14 @@ export default {
                     lat: item.position.lat,
                     lon: item.position.lon
                 }));
-                console.log('Risultati della ricerca:', this.filteredItems);
+                //console.log(response.data.results);
+                //console.log('filteredItems:', this.filteredItems);
+                //console.log('Risultati della ricerca:', this.filteredItems);
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
         },
+          
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
@@ -73,6 +75,8 @@ export default {
     },
     mounted() {
         this.filteredItems = this.items;
+        
+
     }
 }
 

@@ -1,71 +1,73 @@
 <template>
-    <div>
-      <h2>Nearby Places</h2>
-      <ul>
-        <li v-for="place in nearbyPlaces" :key="place.id">
-          {{ place.poi.name }} - {{ place.address.freeformAddress }}
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        nearbyPlaces: []
-      };
+
+    <div class="container text-center mt-5">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="col m-5" v-for="(item, index) in apartments" :key="index">
+                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
+                </div>
+            </div>
+        </div>
+</template>
+
+<script>
+import axios from 'axios';
+import CardApComponent from '../components/CardApComponent.vue';
+export default {
+    name: 'Search',
+    components: {
+        CardApComponent
     },
-    mounted() {
-      // Ottieni l'URL completo
-      const fullUrl = window.location.href;
-      
-      // Esegui la funzione per estrarre query, latitudine e longitudine
-      const { query, latitude, longitude } = this.extractParamsFromUrl(fullUrl);
-      
-      // Chiamata API
-      this.fetchNearbyPlaces(query, latitude, longitude);
+    data() {
+        return {
+            apartments: [],
+        }
     },
     methods: {
-      async fetchNearbyPlaces(query, latitude, longitude) {
-        try {
-          // Esegui la chiamata API a TomTom
-          const response = await axios.get(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json`, {
-            params: {
-              key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
-              limit: 10, // Limite massimo di risultati
-              radius: 20000, // Raggio in metri (20 km)
-              lat: latitude, // Latitudine
-              lon: longitude, // Longitudine
-              idxSet: 'POI'
-            }
-          });
-  
-          // Salva i risultati nella variabile nearbyPlaces
-          this.nearbyPlaces = response.data.results;
-          console.log('Nearby Places:', this.nearbyPlaces);
-        } catch (error) {
-          console.error('Error fetching nearby places:', error);
+        getApartments(query, latitude, longitude) {
+            const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(query)}/${latitude}/${longitude}`;
+           console.log(url);
+            axios.get(url).then((response) => {
+                console.log('API Response:', response.data);
+                this.apartments = response.data.results;
+                console.log('Apartments Array:', this.apartments);
+            }).catch((error) => {
+                console.error('API error:', error);
+            });
+        },
+        extractParamsFromUrl(url) {
+            const parts = url.split('/');
+
+            // La query di ricerca è l'elemento dopo 'search/'
+            const query = decodeURIComponent(parts[parts.indexOf('search') + 1]);
+
+            // La latitudine è l'elemento dopo la query
+            const latitude = parseFloat(parts[parts.indexOf(query) + 1]);
+
+            // La longitudine è l'elemento dopo la latitudine
+            const longitude = parseFloat(parts[parts.indexOf(query) + 2]);
+
+            return { query, latitude, longitude };
         }
-      },
-      extractParamsFromUrl(url) {
-        // Esempio di URL: http://localhost:5174/search/Via%20Napo%20della%20Torre,%2020029%20Turbigo/45.536234/8.738512
-        const parts = url.split('/');
+    },
+    mounted() {
+        // Ottieni l'URL completo
+        const fullUrl = window.location.href;
+
+        // Esegui la funzione per estrarre query, latitudine e longitudine
+        const { query, latitude, longitude } = this.extractParamsFromUrl(fullUrl);
+
+        this.getApartments(query, latitude, longitude);
         
-        // La query di ricerca è l'elemento dopo 'search/'
-        const query = decodeURIComponent(parts[parts.indexOf('search') + 1]);
-        
-        // La latitudine è l'elemento dopo la query
-        const latitude = parseFloat(parts[parts.indexOf(query) + 1]);
-        
-        // La longitudine è l'elemento dopo la latitudine
-        const longitude = parseFloat(parts[parts.indexOf(query) + 2]);
-        
-        return { query, latitude, longitude };
-      }
+        }
     }
-  };
-  </script>
-  
+
+
+</script>
+
+<style scoped>
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+</style>
+
