@@ -13,7 +13,7 @@
                     {{ item.address }}
                 </li>
             </ul>
-            <p v-else>{{ notFound }}</p>
+            <p  :class="{ 'not-found': filteredItems.length}"v-else>{{ notFound }}</p>
         </div>
     </div>
 </template>
@@ -45,7 +45,7 @@ export default {
                     params: {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
-                        limit: 10,
+                        limit: 1,
                         countrySet: 'IT',
                     }
                 });
