@@ -2,7 +2,7 @@
     <div>
         <div class="input-container d-flex">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
-                @input="performSearch" @keyup.enter="performSearch" />
+            @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
                 <button @click="navigateToSearch" class="nav-link pt-3">{{ 'Search' }}</button>
             </span>
@@ -29,7 +29,8 @@ export default {
             filteredItems: [],
             notFound: 'Nessun risultato trovato',
             lat: null,
-            lon: null
+            lon: null,
+            debounceTimer: null
         }
     },
     methods: {
@@ -67,6 +68,12 @@ export default {
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
+        },
+        debouncedPerformSearch() {
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => {
+                this.performSearch();
+            }, 1000); // Imposta il ritardo del debounce a 1 secondo (1000 ms)
         },
         selectItem(item) {
             this.searchQuery = item.address;
