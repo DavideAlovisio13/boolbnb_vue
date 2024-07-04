@@ -1,12 +1,22 @@
+import axios from "axios";
 import { reactive } from "vue";
 export const store = reactive({
-  apiBaseUrl: "http://127.0.0.1:8000/Api",
-  imgBasePath: "http://127.0.0.1:8000/storage/",
+  apiBaseUrl: "http://127.0.0.1:8000/api/",
+  apartamentQuery: "apartament/",
+  sponsoredQuery: "apartament/sponsored/",
   apartament: [],
   search: [],
-  service: [],
   sponsored: [],
-  user: []
+  methods: {
+    async apiGetApart() {
+      const { data } = await axios.get(`${this.apiBaseUrl}${this.apartamentQuery}`);
+      this.apartament = data.results;
+      console.log(this.apartament);
+    },
+    async apiGetSponsored() {
+      const { data } = await axios.get(`${this.apiBaseUrl}${this.sponsoredQuery}`);
+      this.sponsored = data.results;
+      console.log(this.sponsored);
+    },
+  }
 });
-
-console.log(store.search)
