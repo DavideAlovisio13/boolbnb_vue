@@ -55,9 +55,9 @@ export default {
                     lat: item.position.lat,
                     lon: item.position.lon
                 }));
-                console.log(response.data.results);
-                console.log('filteredItems:', this.filteredItems);
-                console.log('Risultati della ricerca:', this.filteredItems);
+                //console.log(response.data.results);
+                //console.log('filteredItems:', this.filteredItems);
+                //console.log('Risultati della ricerca:', this.filteredItems);
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
@@ -75,8 +75,7 @@ export default {
     },
     mounted() {
         this.filteredItems = this.items;
-        this.search();
-        console.log('Search:', store.search);
+        
 
     }
 }

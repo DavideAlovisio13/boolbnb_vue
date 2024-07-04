@@ -22,7 +22,7 @@ export default {
     props: ['apartment', 'index', 'title', 'image'],
     computed: {
         imageUrl() {
-            console.log('Image prop:', this.image);
+            //console.log('Image prop:', this.image);
             return this.image ? `http://127.0.0.1:8000/storage/${this.image}` : 'https://via.placeholder.com/320x240';
         }
     }

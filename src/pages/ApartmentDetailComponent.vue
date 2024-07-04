@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>{{ apartment.name }}</h1>
         <img :src="imageUrl" :alt="apartment.name" class="apartment-image">
         <p>{{ apartment.description }}</p>

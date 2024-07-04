@@ -38,7 +38,7 @@ export default {
         getSponsored() {
             axios.get('http://127.0.0.1:8000/api/apartments/sponsored').then((response) => {
                 this.store.sponsored = response.data.results;
-                console.log('Sponsored Apartments:', this.store.sponsored);
+                //console.log('Sponsored Apartments:', this.store.sponsored);
             })
         }
     },
