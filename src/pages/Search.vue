@@ -1,15 +1,10 @@
 <template>
-    <div>
-        <div class="card">
-            <span class="card__title">Risultati</span>
-        </div>
-        <div class="container text-center mt-5">
-            <SearchComponent @search-performed="getApartments" />
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div class="col m-5" v-for="(item, index) in apartments" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
-                </div>
+    <div class="container text-center mt-5">
+        <SearchComponent @search-performed="getApartments"/>
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div class="col m-5" v-for="(item, index) in apartments" :key="index">
+                <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
+                    :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
             </div>
         </div>
     </div>
@@ -60,6 +55,8 @@ export default {
     },
 }
 </script>
+
+
 
 <style scoped>
 .list-unstyled {

@@ -1,12 +1,10 @@
 <template>
     <div>
-        <div class="input-container d-flex align-items-center justify-content-center">
+        <div class="input-container d-flex">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
                 @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
-                <button class="button type1" @click="navigateToSearch">
-                    <span class="btn-txt">{{ 'Search' }}</span>
-                </button>
+                <button @click="performSearch" class="nav-link pt-3">{{ 'Search' }}</button>
             </span>
         </div>
         <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
@@ -21,6 +19,7 @@
 
 <script>
 import axios from 'axios';
+import debounce from 'lodash.debounce';
 
 export default {
     name: 'SearchComponent',
@@ -31,12 +30,26 @@ export default {
             filteredItems: [],
             notFound: 'Nessun risultato trovato',
             lat: null,
-            lon: null,
-            debounceTimer: null
+            lon: null
         }
     },
     methods: {
         async performSearch() {
+            if (this.filteredItems.length > 0) {
+                this.lat = this.filteredItems[0].lat;
+                this.lon = this.filteredItems[0].lon;
+
+                this.$emit('search-performed', {
+                    query: this.searchQuery,
+                    latitude: this.lat,
+                    longitude: this.lon
+                });
+
+                // Aggiorna l'URL
+                this.updateUrl();
+            }
+        },
+        async fetchSuggestions() {
             if (this.searchQuery.length < 2) {
                 this.filteredItems = [];
                 return;
@@ -47,7 +60,7 @@ export default {
                     params: {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
-                        limit: 1,
+                        limit: 5,
                         countrySet: 'IT',
                     }
                 });
@@ -58,24 +71,9 @@ export default {
                     lon: item.position.lon
                 }));
 
-                // Emmetti l'evento per aggiornare i risultati
-                if (this.filteredItems.length > 0) {
-                    this.$emit('search-performed', {
-                        query: this.searchQuery,
-                        latitude: this.filteredItems[0].lat,
-                        longitude: this.filteredItems[0].lon
-                    });
-                }
-
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
-        },
-        debouncedPerformSearch() {
-            clearTimeout(this.debounceTimer);
-            this.debounceTimer = setTimeout(() => {
-                this.performSearch();
-            }, 1000); // Imposta il ritardo del debounce a 1 secondo (1000 ms)
         },
         selectItem(item) {
             this.searchQuery = item.address;
@@ -87,18 +85,14 @@ export default {
                 latitude: this.lat,
                 longitude: this.lon
             });
+            this.updateUrl();
         },
-        navigateToSearch() {
-            this.$emit('search-performed', {
-                query: this.searchQuery,
-                latitude: this.lat,
-                longitude: this.lon
-            });
+        updateUrl() {
             this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         }
     },
-    mounted() {
-        this.filteredItems = this.items;
+    created() {
+        this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
     }
 }
 </script>
