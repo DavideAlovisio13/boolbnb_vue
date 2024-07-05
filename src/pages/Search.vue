@@ -1,6 +1,6 @@
 <template>
     <div class="container text-center mt-5">
-        <SearchComponent @search-performed="getApartments" @update-url="updateUrl" />
+        <SearchComponent @search-performed="getApartments"/>
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
             <div class="col m-5" v-for="(item, index) in apartments" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
@@ -40,12 +40,6 @@ export default {
                 console.error('API error:', error);
             });
         },
-        updateUrl(searchQuery) {
-            const params = new URLSearchParams(window.location.search);
-            params.set('query', searchQuery);
-            const newUrl = `${window.location.pathname}?${params.toString()}`;
-            window.history.pushState({}, '', newUrl);
-        },
         extractParamsFromUrl(url) {
             const parts = url.split('/');
             const query = decodeURIComponent(parts[parts.indexOf('search') + 1]);
@@ -61,6 +55,8 @@ export default {
     },
 }
 </script>
+
+
 
 <style scoped>
 .list-unstyled {

@@ -2,9 +2,9 @@
     <div>
         <div class="input-container d-flex">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
-                @input="onInput" @keyup.enter="performSearch" />
+                @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
-                <button @click="navigateToSearch" class="nav-link pt-3">{{ 'Search' }}</button>
+                <button @click="performSearch" class="nav-link pt-3">{{ 'Search' }}</button>
             </span>
         </div>
         <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
@@ -34,20 +34,36 @@ export default {
         }
     },
     methods: {
-        performSearch() {
+        async performSearch() {
+            if (this.filteredItems.length > 0) {
+                this.lat = this.filteredItems[0].lat;
+                this.lon = this.filteredItems[0].lon;
+
+                this.$emit('search-performed', {
+                    query: this.searchQuery,
+                    latitude: this.lat,
+                    longitude: this.lon
+                });
+
+                // Aggiorna l'URL
+                this.updateUrl();
+            }
+        },
+        async fetchSuggestions() {
             if (this.searchQuery.length < 2) {
                 this.filteredItems = [];
                 return;
             }
 
-            axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
-                params: {
-                    key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
-                    radius: 20000,
-                    limit: 5,
-                    countrySet: 'IT',
-                }
-            }).then((response) => {
+            try {
+                const response = await axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
+                    params: {
+                        key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
+                        radius: 20000,  // 20 km in metri
+                        limit: 5,
+                        countrySet: 'IT',
+                    }
+                });
                 this.filteredItems = response.data.results.map(item => ({
                     id: item.id,
                     address: item.address.freeformAddress,
@@ -55,54 +71,28 @@ export default {
                     lon: item.position.lon
                 }));
 
-                if (this.filteredItems.length > 0) {
-                    const firstResult = this.filteredItems[0];
-                    this.lat = firstResult.lat;
-                    this.lon = firstResult.lon;
-                    this.updateUrl();
-                    this.$emit('search-performed', {
-                        query: this.searchQuery,
-                        latitude: this.lat,
-                        longitude: this.lon
-                    });
-                }
-            }).catch((error) => {
+            } catch (error) {
                 console.error('Errore durante la ricerca:', error);
-            });
+            }
         },
-        onInput: debounce(function () {
-            this.performSearch();
-        }, 1000),
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
             this.lon = item.lon;
             this.filteredItems = [];
+            this.$emit('search-performed', {
+                query: this.searchQuery,
+                latitude: this.lat,
+                longitude: this.lon
+            });
             this.updateUrl();
-            this.$emit('search-performed', {
-                query: this.searchQuery,
-                latitude: this.lat,
-                longitude: this.lon
-            });
-        },
-        navigateToSearch() {
-            this.$emit('search-performed', {
-                query: this.searchQuery,
-                latitude: this.lat,
-                longitude: this.lon
-            });
-            this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         },
         updateUrl() {
-            this.$router.replace({ 
-                name: 'search', 
-                params: { 
-                    query: this.searchQuery, 
-                    lat: this.lat, 
-                    lon: this.lon 
-                }
-            });
+            this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         }
+    },
+    created() {
+        this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
     }
 }
 </script>
