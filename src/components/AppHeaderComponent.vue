@@ -43,7 +43,6 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
-    background: red;
     padding: 30px 0;
 }
 
