@@ -1,4 +1,6 @@
 <template>
+  <video src="/public/videos/video-jumbo.mp4" autoplay loop muted
+  style="position:absolute; z-index:-1; object-fit: cover; width: 100%; height: 100vh;"></video>
   <div>
     <AppHeaderComponent />
     <router-view></router-view>

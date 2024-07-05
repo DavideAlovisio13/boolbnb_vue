@@ -1,26 +1,25 @@
 <template>
     <div>
-        <div class="input-container d-flex">
+        <div class="input-container d-flex align-items-center justify-content-center">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
-                @input="performSearch" @keyup.enter="performSearch" />
+                @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
-                <button @click="navigateToSearch" class="nav-link pt-3">{{ 'Search' }}</button>
+                <button class="button type1" @click="navigateToSearch">
+                    <span class="btn-txt">{{ 'Search' }}</span>
+                </button>
             </span>
         </div>
-        <div v-if="searchQuery" class="search-results">
+        <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
             <ul v-if="filteredItems.length" class="list-unstyled">
                 <li v-for="item in filteredItems" :key="item.id" @click="selectItem(item)">
                     {{ item.address }}
                 </li>
             </ul>
-            <p v-else>{{ notFound }}</p>
         </div>
     </div>
 </template>
 
-
 <script>
-import { store } from '@/store';
 import axios from 'axios';
 
 export default {
@@ -30,12 +29,15 @@ export default {
             searchQuery: '',
             items: [],
             filteredItems: [],
-            notFound: 'Nessun risultato trovato'
+            notFound: 'Nessun risultato trovato',
+            lat: null,
+            lon: null,
+            debounceTimer: null
         }
     },
     methods: {
         async performSearch() {
-            if (this.searchQuery < 2) {
+            if (this.searchQuery.length < 2) {
                 this.filteredItems = [];
                 return;
             }
@@ -45,35 +47,60 @@ export default {
                     params: {
                         key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
                         radius: 20000,  // 20 km in metri
-                        limit: 5,
+                        limit: 1,
                         countrySet: 'IT',
-                        //lat: 'LATITUDE', // Latitudine del centro della ricerca
-                        //lon: 'LONGITUDE' // Longitudine del centro della ricerca
                     }
                 });
                 this.filteredItems = response.data.results.map(item => ({
                     id: item.id,
                     address: item.address.freeformAddress,
-                    position: item.position
+                    lat: item.position.lat,
+                    lon: item.position.lon
                 }));
-                console.log('Risultati della ricerca:', this.filteredItems);
+
+                // Emmetti l'evento per aggiornare i risultati
+                if (this.filteredItems.length > 0) {
+                    this.$emit('search-performed', {
+                        query: this.searchQuery,
+                        latitude: this.filteredItems[0].lat,
+                        longitude: this.filteredItems[0].lon
+                    });
+                }
+
             } catch (error) {
                 console.error('Errore durante la ricerca:', error);
             }
         },
+        debouncedPerformSearch() {
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => {
+                this.performSearch();
+            }, 1000); // Imposta il ritardo del debounce a 1 secondo (1000 ms)
+        },
         selectItem(item) {
             this.searchQuery = item.address;
+            this.lat = item.lat;
+            this.lon = item.lon;
             this.filteredItems = [];
+            this.$emit('search-performed', {
+                query: this.searchQuery,
+                latitude: this.lat,
+                longitude: this.lon
+            });
         },
         navigateToSearch() {
-            this.$router.push({ name: 'search', params: { query: this.searchQuery } });
+            this.$emit('search-performed', {
+                query: this.searchQuery,
+                latitude: this.lat,
+                longitude: this.lon
+            });
+            this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         }
     },
     mounted() {
         this.filteredItems = this.items;
     }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -139,5 +166,49 @@ export default {
 .list-unstyled {
     padding-left: 0;
     list-style: none;
+}
+
+.button {
+    height: 50px;
+    width: 200px;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid #252525;
+    overflow: hidden;
+    border-radius: 30px;
+    color: #333;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-txt {
+    z-index: 1;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.type1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s ease-in-out;
+    background-color: #333;
+    border-radius: 30px;
+    visibility: hidden;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+}
+
+.button:hover {
+    box-shadow: 1px 1px 200px #252525;
+    color: #fff;
+    border: none;
+}
+
+.type1:hover::after {
+    visibility: visible;
+    transform: scale(100) translateX(2px);
 }
 </style>

@@ -12,6 +12,8 @@ $fa-font-path: '../fonts/webfonts';
 
 body {
     font-family: $basefont;
+    background-image: url(/images/BG.png);
+    background-attachment: fixed;
 }
 
 h1 {

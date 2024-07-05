@@ -1,17 +1,15 @@
 <template>
-    <div>
-        <div class="brutalist-card">
-            <div class="brutalist-card__header">
-                <div class="brutalist-card__alert">{{ title }}</div>
-            </div>
-            <img :src="imageUrl" :alt="title" class="brutalist-card__image">
-            <div class="brutalist-card__message">
-                This is a brutalist card with a very angry button. Proceed with caution,
-                you've been warned.
-            </div>
-            <div class="brutalist-card__actions">
-                <router-link :to="{ name: 'apartment-detail', params: { id: apartment.id } }" class="brutalist-card__button brutalist-card__button--read">Okay</router-link>
-            </div>
+    <div class="brutalist-card" :class="{ 'brutalist-card--sponsored': sponsored }">
+        <div class="brutalist-card__header">
+            <div class="brutalist-card__alert">{{ title }}</div>
+        </div>
+        <img :src="imageUrl" :alt="title" class="brutalist-card__image">
+        <div class="brutalist-card__message">
+            <p>{{ apartment.address }}</p>
+        </div>
+        <div class="brutalist-card__actions">
+            <router-link :to="{ name: 'apartment-detail', params: { id: apartment.id } }"
+                class="brutalist-card__button brutalist-card__button--read">Dettagli</router-link>
         </div>
     </div>
 </template>
@@ -19,10 +17,10 @@
 <script>
 export default {
     name: 'CardApComponent',
-    props: ['apartment', 'index', 'title', 'image'],
+    props: ['apartment', 'index', 'title', 'image', 'num_rooms', 'num_beds', 'sponsored'],
     computed: {
         imageUrl() {
-            console.log('Image prop:', this.image);
+            //console.log('Image prop:', this.image);
             return this.image ? `http://127.0.0.1:8000/storage/${this.image}` : 'https://via.placeholder.com/320x240';
         }
     }
@@ -34,6 +32,15 @@ export default {
     width: 320px;
     border: 4px solid #000;
     background-color: #fff;
+    padding: 1.5rem;
+    box-shadow: 10px 10px 0 #000;
+    font-family: "Arial", sans-serif;
+}
+
+.brutalist-card--sponsored {
+    width: 320px;
+    border: 4px solid #000;
+    background-color: #e9b50b;
     padding: 1.5rem;
     box-shadow: 10px 10px 0 #000;
     font-family: "Arial", sans-serif;
