@@ -28,7 +28,7 @@ export default {
                     routeName: "about"
                 },
                 {
-                    name: "Contattti",
+                    name: "Contatti",
                     routeName: "contacts"
                 },
                 {
