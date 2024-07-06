@@ -9,14 +9,43 @@
         <p>Metri quadrati: {{ apartment.square_meters }}</p>
         <p>Indirizzo: {{ apartment.address }}</p>
     </div>
+    <div class="container pt-6">
+        <h4 class="mt-4 mb-3">Contatta l'host</h4>
+     <!-- Form per inviare messaggi -->
+     <form @submit.prevent="sendMessage()">
+      <div>
+        <label for="name">Nome:</label>
+        <input type="text" id="name"  class="form-control" v-model="messages.name" required>
+      </div>
+    
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email"  class="form-control" v-model="messages.email" required>
+      </div>
+      <div>
+        <label for="content">Messaggio:</label>
+        <textarea id="content" v-model="messages.body"  class="form-control" required>{{ body }}</textarea>
+      </div>
+      <button type="submit">Invia Messaggio</button>
+    </form>
+</div>
 </template>
 
 <script>
+import axios from 'axios';
+import { store } from '@/store';
 export default {
     props: ['id'],
     data() {
         return {
-            apartment: {}
+            store,
+            apartment: {},
+            messages:{ 
+                 name:'',
+                 surname:'',
+                 email:'',
+                 body:''
+                }
         };
     },
     computed: {
@@ -34,6 +63,21 @@ export default {
                 .then(data => {
                     this.apartment = data.results;
                 });
+        },
+        sendMessage(){
+            const data = {
+                ...this.messages,
+                apartment_id: this.apartment?.id || null,
+            };
+            //console.log(data)
+            //posto in axios 
+            axios.post(`${this.store.apiBaseUrl}/message`, data).then((res)=>{
+                console.log(res)
+            }).catch((error) =>{
+
+            }).finally((error)=>{
+                
+            })
         }
     }
 }
