@@ -2,7 +2,11 @@
     <div class="container text-center mt-5">
         <SearchComponent @search-performed="getApartments"/>
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            <div class="col m-5" v-for="(item, index) in apartments" :key="index">
+            <div class="col m-5" v-for="(item, index) in apartmentsSponsored" :key="index">
+                <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
+                    :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']" />
+            </div>
+            <div class="col m-5" v-for="(item, index) in apartmentsBase" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                     :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
             </div>
@@ -23,7 +27,8 @@ export default {
     },
     data() {
         return {
-            apartments: [],
+            apartmentsBase: [],
+            apartmentsSponsored: [],
             latitude: null,
             longitude: null
         }
@@ -33,8 +38,9 @@ export default {
             const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(query)}/${latitude}/${longitude}`;
             console.log(url);
             axios.get(url).then((response) => {
-                console.log('API Response:', response.data);
-                this.apartments = response.data.results;
+                console.log('API Response:', response.data.results);
+                this.apartmentsBase = response.data.results.base;
+                this.apartmentsSponsored = response.data.results.sponsored
                 console.log('Apartments Array:', this.apartments);
             }).catch((error) => {
                 console.error('API error:', error);
