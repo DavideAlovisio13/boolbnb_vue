@@ -50,7 +50,8 @@ export default {
 @import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 .map-container {
-    width: 100%;
+    width: 400px;
     height: 400px;
+    /* margin: 0 auto; */
 }
 </style>
