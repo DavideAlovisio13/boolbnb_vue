@@ -1,6 +1,7 @@
 <template>
     <div class="container text-center mt-5">
         <SearchComponent @search-performed="getApartments"/>
+        <h3 v-if="searchAddress">Ultima ricerca: {{ searchAddress }}</h3>
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
             <div class="col m-5" v-for="(item, index) in apartmentsSponsored" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
@@ -29,19 +30,21 @@ export default {
         return {
             apartmentsBase: [],
             apartmentsSponsored: [],
+            searchAddress: '',
             latitude: null,
             longitude: null
         }
     },
     methods: {
         getApartments({ query, latitude, longitude }) {
+            this.searchAddress = query;
             const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(query)}/${latitude}/${longitude}`;
             console.log(url);
             axios.get(url).then((response) => {
                 console.log('API Response:', response.data.results);
                 this.apartmentsBase = response.data.results.base;
                 this.apartmentsSponsored = response.data.results.sponsored
-                console.log('Apartments Array:', this.apartments);
+                console.log('Apartments Array:', this.apartmentsBase, this.apartmentsSponsored);
             }).catch((error) => {
                 console.error('API error:', error);
             });

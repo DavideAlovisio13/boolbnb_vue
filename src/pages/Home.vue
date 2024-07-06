@@ -37,8 +37,8 @@ export default {
     methods: {
         getApartments() {
             axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
-                this.store.apartment = response.data.results;
-                console.log('Apartments:', this.store.apartment);
+                this.store.apartments = response.data.results;
+                //console.log('Apartments:', this.store.apartments);
             })
         },
         getSponsored() {

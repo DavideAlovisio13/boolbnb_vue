@@ -36,6 +36,7 @@ export default {
     methods: {
         async performSearch() {
             if (this.filteredItems.length > 0) {
+                this.searchQuery = this.filteredItems[0].address;
                 this.lat = this.filteredItems[0].lat;
                 this.lon = this.filteredItems[0].lon;
 
@@ -80,6 +81,7 @@ export default {
             this.lat = item.lat;
             this.lon = item.lon;
             this.filteredItems = [];
+            this.address = item.address;
             this.$emit('search-performed', {
                 query: this.searchQuery,
                 latitude: this.lat,
