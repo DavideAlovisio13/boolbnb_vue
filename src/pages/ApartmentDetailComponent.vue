@@ -9,10 +9,16 @@
         <p>Metri quadrati: {{ apartment.square_meters }}</p>
         <p>Indirizzo: {{ apartment.address }}</p>
     </div>
+    <MapComponent :apartment="apartment"/>
 </template>
 
 <script>
+import MapComponent from '@/components/MapComponent.vue';
 export default {
+    name: 'ApartmentDetailComponent',
+    components: {
+        MapComponent
+    },
     props: ['id'],
     data() {
         return {
