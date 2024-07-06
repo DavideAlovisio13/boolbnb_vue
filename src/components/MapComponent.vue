@@ -1,53 +1,56 @@
 <template>
-    <div id="map" class="map-container"></div>
+    <div class="map-container" ref="map"></div>
 </template>
 
 <script>
 import tt from '@tomtom-international/web-sdk-maps';
+import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 export default {
     name: 'MapComponent',
     props: {
         apartment: {
             type: Object,
-            required: true,
-            default: () => ({ latitude: '0', longitude: '0' }) // Coordinate di default
-        },
+            required: true
+        }
     },
     mounted() {
         this.initializeMap();
     },
     methods: {
         initializeMap() {
-            console.log(this.apartment);
-            // Log per verificare i valori delle coordinate
-            console.log('Latitude:', this.apartment.latitude);
-            console.log('Longitude:', this.apartment.longitude);
+            // Verifica i dati dell'appartamento
+            if (this.apartment && this.apartment.latitude && this.apartment.longitude) {
+                const latitude = parseFloat(this.apartment.latitude);
+                const longitude = parseFloat(this.apartment.longitude);
 
-            const latitude = parseFloat(this.apartment.latitude);
-            const longitude = parseFloat(this.apartment.longitude);
+                // Controllo se le coordinate sono numeri validi
+                if (isNaN(latitude) || isNaN(longitude)) {
+                    console.error('Invalid latitude or longitude');
+                    return;
+                }
 
-            // Controllo se le coordinate sono numeri validi
-            if (isNaN(latitude) || isNaN(longitude)) {
-                console.error('Invalid latitude or longitude');
-                return;
+                // Inizializza la mappa con TomTom
+                const map = tt.map({
+                    key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI', // Sostituisci con la tua API Key
+                    container: this.$refs.map,
+                    center: [longitude, latitude], // Coordinate per il centro della mappa
+                    zoom: 10
+                });
+
+                // Aggiungi un marker
+                const marker = new tt.Marker().setLngLat([longitude, latitude]).addTo(map);
             }
-
-            const map = tt.map({
-                key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI', // Sostituisci con la tua API Key
-                container: 'map',
-                center: [longitude, latitude], // Coordinate per il centro della mappa
-                zoom: 10
-            });
         }
     }
-};
+}
 </script>
 
-<style>
+<style scoped>
+@import '@tomtom-international/web-sdk-maps/dist/maps.css';
+
 .map-container {
-    width: 400px;
+    width: 100%;
     height: 400px;
-    margin: 0 auto;
 }
 </style>

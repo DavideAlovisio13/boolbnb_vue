@@ -1,19 +1,23 @@
 <template>
     <div class="container">
-        <h1>{{ apartment.name }}</h1>
-        <img :src="imageUrl" :alt="apartment.name" class="apartment-image">
-        <p>{{ apartment.description }}</p>
-        <p>Stanze: {{ apartment.num_rooms }}</p>
-        <p>Letti: {{ apartment.num_beds }}</p>
-        <p>Bagni: {{ apartment.num_bathrooms }}</p>
-        <p>Metri quadrati: {{ apartment.square_meters }}</p>
-        <p>Indirizzo: {{ apartment.address }}</p>
+        <h1 v-if="apartment.name">{{ apartment.name }}</h1>
+        <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image">
+        <div v-if="apartment.name">
+            <p>{{ apartment.description }}</p>
+            <p>Stanze: {{ apartment.num_rooms }}</p>
+            <p>Letti: {{ apartment.num_beds }}</p>
+            <p>Bagni: {{ apartment.num_bathrooms }}</p>
+            <p>Metri quadrati: {{ apartment.square_meters }}</p>
+            <p>Indirizzo: {{ apartment.address }}</p>
+            <MapComponent :apartment="apartment"/>
+        </div>
+        <p v-else>Loading...</p>
     </div>
-    <MapComponent :apartment="apartment"/>
 </template>
 
 <script>
 import MapComponent from '@/components/MapComponent.vue';
+
 export default {
     name: 'ApartmentDetailComponent',
     components: {
