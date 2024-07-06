@@ -9,6 +9,24 @@
         <p>Metri quadrati: {{ apartment.square_meters }}</p>
         <p>Indirizzo: {{ apartment.address }}</p>
     </div>
+    <div>
+     <!-- Form per inviare messaggi -->
+     <form @submit.prevent="sendMessage">
+      <div>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" v-model="message.name" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="message.email" required>
+      </div>
+      <div>
+        <label for="content">Messaggio:</label>
+        <textarea id="content" v-model="message.body" required></textarea>
+      </div>
+      <button type="submit">Invia Messaggio</button>
+    </form>
+</div>
 </template>
 
 <script>
@@ -16,7 +34,10 @@ export default {
     props: ['id'],
     data() {
         return {
-            apartment: {}
+            apartment: {},
+            name:'',
+            email:'',
+            body:''
         };
     },
     computed: {
@@ -34,6 +55,9 @@ export default {
                 .then(data => {
                     this.apartment = data.results;
                 });
+        },
+        sendMessage(){
+            console.log(this.sendMessage);
         }
     }
 }
