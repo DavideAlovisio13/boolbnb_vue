@@ -1,5 +1,11 @@
 <template>
-    <div class="map-container" ref="map"></div>
+    <div class="position-relative">
+        <div class="map-container" ref="map"></div>
+        <div class="zoombtn">
+            <button class="d-block" @click="zoomIn">+</button>
+            <button class="d-block" @click="zoomOut">-</button>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -31,7 +37,7 @@ export default {
                 }
 
                 // Inizializza la mappa con TomTom
-                const map = tt.map({
+                this.map = tt.map({
                     key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI', // Sostituisci con la tua API Key
                     container: this.$refs.map,
                     center: [longitude, latitude], // Coordinate per il centro della mappa
@@ -39,7 +45,19 @@ export default {
                 });
 
                 // Aggiungi un marker
-                const marker = new tt.Marker().setLngLat([longitude, latitude]).addTo(map);
+                new tt.Marker().setLngLat([longitude, latitude]).addTo(this.map);
+            }
+        },
+        zoomIn() {
+            if (this.map) {
+                const zoom = this.map.getZoom();
+                this.map.setZoom(zoom + 1);
+            }
+        },
+        zoomOut() {
+            if (this.map) {
+                const zoom = this.map.getZoom();
+                this.map.setZoom(zoom - 1);
             }
         }
     }
@@ -52,6 +70,24 @@ export default {
 .map-container {
     width: 90%;
     height: 400px;
-    /* margin: 0 auto; */
+    margin: 0 auto;
+    border: 2px solid #000;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.zoombtn {
+    position: absolute;
+    top: 0;
+    right: 50px;
+    z-index: 1;
+    margin: 10px;
 }
 </style>
