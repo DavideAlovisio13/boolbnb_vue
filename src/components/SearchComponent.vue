@@ -4,7 +4,7 @@
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
                 @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
-                <button @click="performSearch" class="nav-link pt-3">{{ 'Search' }}</button>
+                <button @click="performSearch" class="nav-link pt-3">{{ 'Cerca...' }}</button>
             </span>
         </div>
         <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
