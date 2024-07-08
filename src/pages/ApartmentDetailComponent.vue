@@ -14,13 +14,13 @@
             <MapComponent :apartment="apartment" />
           </div>
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
-            <b-button variant="primary" @click="showModal = true">Apri Modale</b-button>
+            <b-button variant="primary" @click="showModal = true">Chiedi informazioni all'host</b-button>
           </div>
         </div>
       </div>
       <p v-else>Loading...</p>
   
-      <b-modal v-model="showModal" title="Invia un messaggio" modal-class="custom-modal" dialog-class="slide-in-right">
+      <b-modal v-model="showModal" :title="modalTitle" modal-class="custom-modal myModal" dialog-class="slide-in-right" hide-footer>
         <form @submit.prevent="sendMessage" method="POST" class="form-control container-fluid">
           <div class="form-floating mb-3">
             <input type="text" id="floatingInput" v-model="message.name" required class="form-control border-0 border-bottom">
@@ -65,16 +65,20 @@
           email: '',
           body: ''
         },
-        showModal: false
+        showModal: false,
       };
     },
     computed: {
       imageUrl() {
         return this.apartment.cover_image ? `http://127.0.0.1:8000/storage/${this.apartment.cover_image}` : 'https://via.placeholder.com/320x240';
-      }
+      },
+      modalTitle() {
+      return this.apartment.name ? `Chiedi informazioni per la casa: ${this.apartment.name}` : 'Chiedi informazioni all\'host';
+    }
     },
     mounted() {
       this.fetchApartmentDetails();
+      
     },
     methods: {
       fetchApartmentDetails() {
@@ -92,6 +96,7 @@
             console.log(response);
             alert('Messaggio inviato con successo!');
             this.message = { name: '', surname: '', email: '', body: '' }; // Pulisce il form dopo l'invio
+            this.showModal = false; 
           })
           .catch(error => {
             console.error('Errore durante l\'invio del messaggio:', error);
@@ -117,34 +122,35 @@
     overflow: hidden;
     resize: none; /* Disabilita il ridimensionamento manuale da parte dell'utente */
   }
-  
-  /* Custom styles for the modal */
+  .myModal{
+    width: 800px !important;
+  }
+  /* Custom styles per la modale */
   .custom-modal .modal-dialog {
-    max-width: 50%;
-    margin: 0;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .custom-modal.show .modal-dialog {
-    transform: translateX(0);
-  }
-  
-  /* Add transition class */
-  .slide-in-right {
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(100%);
-  }
-  
-  .slide-in-right.modal-open .modal-dialog {
-    transform: translateX(0);
-  }
+  width: 100%; /* Imposta la larghezza al 100% */
+  max-width: 100%; /* Assicurati che la larghezza massima sia al 100% se necessario */
+  margin: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateX(100%); /* Inizialmente fuori schermo a destra */
+  transition: transform 0.3s ease-in-out;
+}
+
+.custom-modal.show .modal-dialog {
+  transform: translateX(0); /* Appare dalla destra quando la modale è aperta */
+}
+
+.slide-in-right {
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide-in-right.modal-open .modal-dialog {
+  transform: translateX(0); /* Assicura che la modale sia visibile quando è aperta */
+}
   </style>
   
