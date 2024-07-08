@@ -94,24 +94,18 @@ export default {
         },
         toggleServiceFilter(serviceId) {
             if (this.selectedServiceId === serviceId) {
-                // Se il servizio selezionato è già selezionato, deselezionalo
                 this.selectedServiceId = null;
-                
+                this.getApartments({ query: this.searchAddress, latitude: this.latitude, longitude: this.longitude });
             } else {
-                // Altrimenti, seleziona il nuovo servizio
                 this.selectedServiceId = serviceId;
                 this.filterByService(serviceId);
             }
         },
         filterByService(serviceId) {
-            const fullUrl = window.location.href;
-            const { query, latitude, longitude } = this.extractParamsFromUrl(fullUrl);
-            this.latitude = latitude;
-            this.longitude = longitude;
-            const url = `http://127.0.0.1:8000/api/apartments/filter-by-service/${serviceId}/${this.latitude}/${this.longitude}`;
+            const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(this.searchAddress)}/${this.latitude}/${this.longitude}/${serviceId}`;
             axios.get(url).then((response) => {
-                this.filteredApartmentsBase = response.data.base;
-                this.filteredApartmentsSponsored = response.data.sponsored;
+                this.filteredApartmentsBase = response.data.results.base;
+                this.filteredApartmentsSponsored = response.data.results.sponsored;
             }).catch((error) => {
                 console.error('API error:', error);
             });
@@ -130,6 +124,8 @@ export default {
     mounted() {
         const fullUrl = window.location.href;
         const { query, latitude, longitude } = this.extractParamsFromUrl(fullUrl);
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.getApartments({ query, latitude, longitude });
     },
 }
