@@ -1,25 +1,44 @@
 <template>
   <div class="container">
-    <div class="apartment-details">
-      <h1 v-if="apartment.name" class="apartment-title">{{ apartment.name }}</h1>
-      <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image">
+    <div class="apartment-details brutalist-card mt-2">
+      <div class="top d-flex justify-content-between w-100">
+        <div class="left " v-if="apartment.name">
+          <h1 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">{{
+            apartment.name }}</h1>
+          <p class="fs-4"><strong>Descrizione:</strong> {{ apartment.description }}</p>
+          <p class="fs-4"><strong><i class="fa-solid fa-house-user"></i>:
+            </strong> {{ apartment.num_rooms }}</p>
+          <p class="fs-4"><strong><i class="fa-solid fa-bed"></i>:</strong> {{ apartment.num_beds }}</p>
+          <p class="fs-4"><strong><i class="fa-solid fa-bath"></i>:</strong> {{ apartment.num_bathrooms }}</p>
+          <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong> {{ apartment.square_meters }} m²</p>
+          <p class="fs-4"><strong><i class="fa-solid fa-location-dot"></i>:</strong> {{ apartment.address }}</p>
+        </div>
+        <div class="right" v-if="apartment.cover_image">
+          <img src="/public/images/BG.png" alt="" class="apartment-image">
+          <!-- <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image"> -->
+        </div>
+      </div>
       <div v-if="apartment.name" class="apartment-message">
-        <p>{{ apartment.description }}</p>
-        <p>Stanze: {{ apartment.num_rooms }}</p>
-        <p>Letti: {{ apartment.num_beds }}</p>
-        <p>Bagni: {{ apartment.num_bathrooms }}</p>
-        <p>Metri quadrati: {{ apartment.square_meters }}</p>
-        <p>Indirizzo: {{ apartment.address }}</p>
+        <h2 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">Mappa</h2>
         <div class="row my-4">
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <MapComponent :apartment="apartment" />
           </div>
-          <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
-            <b-button variant="primary" @click="showModal = true">Apri Modale</b-button>
+          <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid ">
+            <b-button class="brutalist-card__button" variant="danger" @click="showModal = true">Invia un messaggio al proprietario</b-button>
           </div>
         </div>
       </div>
-      <p v-else>Loading...</p>
+      <div class="dot-spinner d-flex align-items-center mx-auto" v-else>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+      </div>
 
       <b-modal v-model="showModal" :title="modalTitle" modal-class="custom-modal myModal" dialog-class="slide-in-right"
         hide-footer>
@@ -133,10 +152,94 @@ export default {
 </script>
 
 <style scoped>
-.apartment-image {
+.brutalist-card {
+  width: 75%;
+  margin: 0 auto;
+  border: 4px solid #000;
+  background-color: #fff;
+  padding: 1.5rem;
+  box-shadow: 10px 10px 0 #000;
+  font-family: "Arial", sans-serif;
+}
+
+.brutalist-card__alert {
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.brutalist-card__button {
+  display: block;
   width: 100%;
-  height: auto;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 3px solid #000;
+  background-color: #fff;
+  color: #000;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 5px 5px 0 #000;
+  overflow: hidden;
+  text-decoration: none;
   margin-bottom: 1rem;
+}
+
+.brutalist-card__button--read {
+  background-color: #000;
+  color: #fff;
+}
+
+.brutalist-card__button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent);
+  transition: all 0.6s;
+}
+
+.brutalist-card__button:hover::before {
+  left: 100%;
+}
+
+.brutalist-card__button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #000;
+}
+
+.brutalist-card__button--mark:hover {
+  background-color: black;
+  border-color: white;
+  color: #fff;
+  box-shadow: 7px 7px 0 black;
+}
+
+.brutalist-card__button--read:hover {
+  background-color: #ff0000;
+  border-color: #ff0000;
+  color: #fff;
+  box-shadow: 7px 7px 0 #800000;
+}
+
+.brutalist-card__button:active {
+  transform: translate(5px, 5px);
+  box-shadow: none;
+}
+
+.apartment-image {
+  width: 350px;
+  height: 450px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 10px 10px 0 #000;
 }
 
 textarea {
@@ -185,5 +288,111 @@ textarea {
   color: red;
   font-size: 14px;
   margin-top: 5px;
+}
+
+.dot-spinner {
+  --uib-size: 2.8rem;
+  --uib-speed: .9s;
+  --uib-color: #183153;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--uib-size);
+  width: var(--uib-size);
+  font-family: "Arial", sans-serif;
+}
+
+.dot-spinner__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+
+.dot-spinner__dot::before {
+  content: '';
+  height: 20%;
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  transform: scale(0);
+  opacity: 0.5;
+  animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+}
+
+.dot-spinner__dot:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.dot-spinner__dot:nth-child(2)::before {
+  animation-delay: calc(var(--uib-speed) * -0.875);
+}
+
+.dot-spinner__dot:nth-child(3) {
+  transform: rotate(90deg);
+}
+
+.dot-spinner__dot:nth-child(3)::before {
+  animation-delay: calc(var(--uib-speed) * -0.75);
+}
+
+.dot-spinner__dot:nth-child(4) {
+  transform: rotate(135deg);
+}
+
+.dot-spinner__dot:nth-child(4)::before {
+  animation-delay: calc(var(--uib-speed) * -0.625);
+}
+
+.dot-spinner__dot:nth-child(5) {
+  transform: rotate(180deg);
+}
+
+.dot-spinner__dot:nth-child(5)::before {
+  animation-delay: calc(var(--uib-speed) * -0.5);
+}
+
+.dot-spinner__dot:nth-child(6) {
+  transform: rotate(225deg);
+}
+
+.dot-spinner__dot:nth-child(6)::before {
+  animation-delay: calc(var(--uib-speed) * -0.375);
+}
+
+.dot-spinner__dot:nth-child(7) {
+  transform: rotate(270deg);
+}
+
+.dot-spinner__dot:nth-child(7)::before {
+  animation-delay: calc(var(--uib-speed) * -0.25);
+}
+
+.dot-spinner__dot:nth-child(8) {
+  transform: rotate(315deg);
+}
+
+.dot-spinner__dot:nth-child(8)::before {
+  animation-delay: calc(var(--uib-speed) * -0.125);
+}
+
+@keyframes pulse0112 {
+
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>
