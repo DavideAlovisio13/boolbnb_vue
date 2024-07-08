@@ -8,7 +8,7 @@
                 <h5 class="text-body-emphasis h4">Filtri</h5>
                 <span class="text-body-secondary">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div v-for="(service, index) in services" :key="index" @click="filterByService(service.id)"
+                        <div v-for="(service, index) in services" :key="index" @click="toggleServiceFilter(service.id)"
                             :class="{ 'selected-service': selectedServiceId === service.id }" class="service-item w-25">
                             <img :src="getServiceIconUrl(service.icon)" :alt="service.name" class="w-25" />
                             <p>{{ service.name }}</p>
@@ -82,22 +82,28 @@ export default {
         getApartments({ query, latitude, longitude }) {
             this.searchAddress = query;
             const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(query)}/${latitude}/${longitude}`;
-            console.log(url);
             axios.get(url).then((response) => {
-                console.log('API Response:', response.data.results);
                 this.apartmentsBase = response.data.results.base;
                 this.apartmentsSponsored = response.data.results.sponsored;
                 this.services = response.data.results.services;
                 this.filteredApartmentsBase = [...this.apartmentsBase];
                 this.filteredApartmentsSponsored = [...this.apartmentsSponsored];
-
-                //console.log('Apartments Array:', this.apartmentsBase, this.apartmentsSponsored);
             }).catch((error) => {
                 console.error('API error:', error);
             });
         },
+        toggleServiceFilter(serviceId) {
+            if (this.selectedServiceId === serviceId) {
+                // Se il servizio selezionato è già selezionato, deselezionalo
+                this.selectedServiceId = null;
+                
+            } else {
+                // Altrimenti, seleziona il nuovo servizio
+                this.selectedServiceId = serviceId;
+                this.filterByService(serviceId);
+            }
+        },
         filterByService(serviceId) {
-            this.selectedServiceId = serviceId;
             const fullUrl = window.location.href;
             const { query, latitude, longitude } = this.extractParamsFromUrl(fullUrl);
             this.latitude = latitude;
@@ -128,8 +134,6 @@ export default {
     },
 }
 </script>
-
-
 
 <style scoped>
 .list-unstyled {
@@ -188,7 +192,7 @@ export default {
 
 .selected-service {
     background-color: #FFC107;
-    border: 2px solid #007bff;
+    border: 2px solid #a9a9a9;
     border-radius: 5px;
 }
 </style>
