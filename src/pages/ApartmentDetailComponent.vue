@@ -31,7 +31,7 @@
             <label for="floatingInput">Cognome</label>
           </div>
           <div class="form-floating mb-3">
-          <input type="email" id="email" v-model="message.email" pattern="/^[^\s@]+@[^\s@]{2,}\.[a-z]{2,}$/" required title="rispetta il formato richiesto: esempio@example.com " class="form-control border-0 border-bottom"
+          <input type="email" id="email" v-model="message.email"  required title="rispetta il formato richiesto: esempio@example.com" class="form-control border-0 border-bottom"
                  @blur="validateEmail">
           <label for="floatingInput">Email</label>
           <span v-if="emailError" class="error-message">{{ emailError }}</span>
@@ -114,9 +114,9 @@ export default {
       textarea.style.height = textarea.scrollHeight + 'px'; // Imposta l'altezza al nuovo scrollHeight
     },
     validateEmail() {
-      const emailPattern = /^[^\s@]+@[^\s@]{2,}\.[a-z]{2,}$/;
+      const emailPattern = /^[^\s@]+@[a-z]{2,}\.[a-z]{2,}$/;
       if (!emailPattern.test(this.message.email)) {
-        this.emailError = 'Email non valida ';
+        this.emailError = 'rispetta il formato richiesto: esempio@email.com ';
       } else {
         this.emailError = null;
       }
