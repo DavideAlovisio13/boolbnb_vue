@@ -23,17 +23,19 @@
       <b-modal v-model="showModal" :title="modalTitle" modal-class="custom-modal myModal" dialog-class="slide-in-right" hide-footer>
         <form @submit.prevent="sendMessage" method="POST" class="form-control container-fluid">
           <div class="form-floating mb-3">
-            <input type="text" id="floatingInput" v-model="message.name" required class="form-control border-0 border-bottom">
+            <input type="text" id="floatingInput" pattern="[A-Za-z' ]+" title="Solo lettere ammesse" v-model="message.name" minlength="3" required class="form-control border-0 border-bottom">
             <label for="floatingInput">Nome</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" id="name" v-model="message.surname" required class="form-control border-0 border-bottom">
+            <input type="text" id="name" v-model="message.surname" pattern="[A-Za-z' ]+" title="Solo lettere ammesse" minlength="4" required class="form-control border-0 border-bottom">
             <label for="floatingInput">Cognome</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="email" id="email" v-model="message.email" required class="form-control border-0 border-bottom">
-            <label for="floatingInput">Email</label>
-          </div>
+          <input type="email" id="email" v-model="message.email"  required title="rispetta il formato richiesto: esempio@example.com" class="form-control border-0 border-bottom"
+                 @blur="validateEmail">
+          <label for="floatingInput">Email</label>
+          <span v-if="emailError" class="error-message">{{ emailError }}</span>
+        </div>
           <div class="form-floating mb-3">
             <textarea id="floatingTextarea" v-model="message.body" required class="form-control border-0 border-bottom" @input="adjustHeight">{{ message.body }}</textarea>
             <label for="floatingTextarea">Messaggio</label>
@@ -45,71 +47,83 @@
   </template>
   
   <script>
-  import MapComponent from '@/components/MapComponent.vue';
-  import axios from 'axios';
-  import { store } from '@/store';
-  
-  export default {
-    name: 'ApartmentDetailComponent',
-    components: {
-      MapComponent
-    },
-    props: ['id'],
-    data() {
-      return {
-        store,
-        apartment: {},
-        message: {
-          name: '',
-          surname: '',
-          email: '',
-          body: ''
-        },
-        showModal: false,
-      };
-    },
-    computed: {
-      imageUrl() {
-        return this.apartment.cover_image ? `http://127.0.0.1:8000/storage/${this.apartment.cover_image}` : 'https://via.placeholder.com/320x240';
+import MapComponent from '@/components/MapComponent.vue';
+import axios from 'axios';
+import { store } from '@/store';
+
+export default {
+  name: 'ApartmentDetailComponent',
+  components: {
+    MapComponent
+  },
+  props: ['id'],
+  data() {
+    return {
+      store,
+      apartment: {},
+      message: {
+        name: '',
+        surname: '',
+        email: '',
+        body: ''
       },
-      modalTitle() {
+      showModal: false,
+      emailError: null
+    };
+  },
+  computed: {
+    imageUrl() {
+      return this.apartment.cover_image ? `http://127.0.0.1:8000/storage/${this.apartment.cover_image}` : 'https://via.placeholder.com/320x240';
+    },
+    modalTitle() {
       return this.apartment.name ? `Chiedi informazioni per la casa: ${this.apartment.name}` : 'Chiedi informazioni all\'host';
     }
+  },
+  mounted() {
+    this.fetchApartmentDetails();
+  },
+  methods: {
+    fetchApartmentDetails() {
+      fetch(`http://127.0.0.1:8000/api/apartments/${this.id}`)
+        .then(response => response.json())
+        .then(data => {
+          this.apartment = data.results;
+        });
     },
-    mounted() {
-      this.fetchApartmentDetails();
-      
+    sendMessage() {
+      if (this.emailError) {
+        alert('Correggi gli errori nel modulo.');
+        return;
+      }
+      // Invia il messaggio al back end (Laravel)
+      console.log(this.message);
+      axios.post(`${this.store.apiBaseUrl}/apartments/${this.id}/send-message`, this.message)
+        .then(response => {
+          console.log(response);
+          alert('Messaggio inviato con successo!');
+          this.message = { name: '', surname: '', email: '', body: '' }; // Pulisce il form dopo l'invio
+          this.showModal = false; 
+        })
+        .catch(error => {
+          console.error('Errore durante l\'invio del messaggio:', error);
+        });
     },
-    methods: {
-      fetchApartmentDetails() {
-        fetch(`http://127.0.0.1:8000/api/apartments/${this.id}`)
-          .then(response => response.json())
-          .then(data => {
-            this.apartment = data.results;
-          });
-      },
-      sendMessage() {
-        // Invia il messaggio al back end (Laravel)
-        console.log(this.message);
-        axios.post(`${this.store.apiBaseUrl}/apartments/${this.id}/send-message`, this.message)
-          .then(response => {
-            console.log(response);
-            alert('Messaggio inviato con successo!');
-            this.message = { name: '', surname: '', email: '', body: '' }; // Pulisce il form dopo l'invio
-            this.showModal = false; 
-          })
-          .catch(error => {
-            console.error('Errore durante l\'invio del messaggio:', error);
-          });
-      },
-      adjustHeight(event) {
-        const textarea = event.target;
-        textarea.style.height = 'auto'; // Resetta l'altezza per calcolare correttamente il nuovo scrollHeight
-        textarea.style.height = textarea.scrollHeight + 'px'; // Imposta l'altezza al nuovo scrollHeight
+    adjustHeight(event) {
+      const textarea = event.target;
+      textarea.style.height = 'auto'; // Resetta l'altezza per calcolare correttamente il nuovo scrollHeight
+      textarea.style.height = textarea.scrollHeight + 'px'; // Imposta l'altezza al nuovo scrollHeight
+    },
+    validateEmail() {
+      const emailPattern = /^[^\s@]+@[a-z]{2,}\.[a-z]{2,}$/;
+      if (!emailPattern.test(this.message.email)) {
+        this.emailError = 'rispetta il formato richiesto: esempio@email.com ';
+      } else {
+        this.emailError = null;
       }
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .apartment-image {
@@ -125,7 +139,7 @@
   .myModal{
     width: 800px !important;
   }
-  /* Custom styles per la modale */
+  /* Custom style per la modale */
   .custom-modal .modal-dialog {
   width: 100%; /* Imposta la larghezza al 100% */
   max-width: 100%; /* Assicurati che la larghezza massima sia al 100% se necessario */
@@ -151,6 +165,11 @@
 
 .slide-in-right.modal-open .modal-dialog {
   transform: translateX(0); /* Assicura che la modale sia visibile quando è aperta */
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
   </style>
   
