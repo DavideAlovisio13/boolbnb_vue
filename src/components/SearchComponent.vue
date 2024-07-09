@@ -29,7 +29,8 @@ export default {
             filteredItems: [],
             notFound: 'Nessun risultato trovato',
             lat: null,
-            lon: null
+            lon: null,
+            routeName: ''
         }
     },
     methods: {
@@ -38,7 +39,6 @@ export default {
                 this.searchQuery = this.filteredItems[0].address;
                 this.lat = this.filteredItems[0].lat;
                 this.lon = this.filteredItems[0].lon;
-                this.saveSearchQuery();
                 this.$emit('search-performed', {
                     query: this.searchQuery,
                     latitude: this.lat,
@@ -47,6 +47,8 @@ export default {
 
                 // Aggiorna l'URL
                 this.updateUrl();
+
+                this.saveSearchQuery();
             }
         },
         async fetchSuggestions() {
@@ -75,13 +77,14 @@ export default {
             this.lat = item.lat;
             this.lon = item.lon;
             this.filteredItems = [];
-            this.saveSearchQuery();
             this.$emit('search-performed', {
                 query: this.searchQuery,
                 latitude: this.lat,
                 longitude: this.lon
             });
             this.updateUrl();
+            
+            this.saveSearchQuery();
         },
         updateUrl() {
             this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
@@ -90,16 +93,32 @@ export default {
             localStorage.setItem('lastSearchQuery', this.searchQuery);
         },
         loadSearchQuery() {
-            const savedQuery = localStorage.getItem('lastSearchQuery');
-            if (savedQuery) {
-                this.searchQuery = savedQuery;
+            
+            if (this.$route.name === 'search') {
+                const savedQuery = localStorage.getItem('lastSearchQuery');
+                if (savedQuery) {
+                    this.searchQuery = savedQuery;
+                }
             }
         }
     },
     created() {
         this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
         //console.log('searchComponent created');
-        this.loadSearchQuery();
+        this.routeName = this.$route.name;
+
+        this.loadSearchQuery(); // Carica la query di ricerca salvata solo se l'utente è ancora sulla pagina di ricerca
+    },
+    watch: {
+        '$route.name'(newVal, oldVal) {
+            // cambia al cambiare della query
+            if (newVal !== this.routeName) {
+                this.searchQuery = ''; // Svuota la query di ricerca
+            } else {
+                // Se l'utente è sulla stessa pagina di ricerca, carica la query di ricerca salvata
+                this.loadSearchQuery();
+            }
+        }
     }
 }
 </script>
