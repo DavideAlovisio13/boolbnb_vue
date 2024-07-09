@@ -1,16 +1,23 @@
 <template>
     <div class="container text-center mt-5">
         <SearchComponent @search-performed="getApartments" />
-        <p>Numero di risultati: {{ this.allApartments.length }}</p>
-        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            <div class="col m-5" v-for="(item, index) in allApartments" :key="index">
-                <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                    :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']"
-                    :distance="item.distance" />
+        <div class="d-flex justify-content-between align-items-center">
+            <div v-for="(service, index) in services" :key="index" 
+            :class="{ 'selected-service': selectedServiceId.includes(service.id) }"
+            class="service-item w-25" @click="toggleServiceSelection(service.id)">
+                <img :src="getServiceIconUrl(service.icon)" :alt="service.name" class="w-25" />
+                <p>{{ service.name }}</p>
             </div>
         </div>
-    </div>
-
+            <p>Numero di risultati: {{ this.allApartments.length }}</p>
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="col m-5" v-for="(item, index) in allApartments" :key="index">
+                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
+                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']"
+                        :distance="item.distance" />
+                </div>
+            </div>
+        </div>
 </template>
 
 <script>
@@ -63,7 +70,10 @@ export default {
             const latitude = parseFloat(parts[parts.indexOf(query) + 1]);
             const longitude = parseFloat(parts[parts.indexOf(query) + 2]);
             return { query, latitude, longitude };
-        }
+        },
+        getServiceIconUrl(iconPath) {
+            return `http://127.0.0.1:8000/${iconPath}`;
+        },
     },
     mounted() {
         const fullUrl = window.location.href;

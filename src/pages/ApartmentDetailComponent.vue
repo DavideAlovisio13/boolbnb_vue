@@ -23,7 +23,7 @@
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <h3>Servizi</h3>
             <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
-              <span><img :src="`http://127.0.0.1:8000/storage/${apartment.icon}`" alt=""></span>
+              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt=""></span>
               : {{ apartment.name }}
             </p>
           </div>
