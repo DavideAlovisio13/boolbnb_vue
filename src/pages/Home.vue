@@ -4,14 +4,17 @@
         <div class="card">
             <span class="card__title">Sponsorizzati</span>
         </div>
-        <div class="container text-center mt-2">
-            <div class="row row-cols-2 row-cols-lg-4 g-5 g-lg-3">
-                <div class="col " v-for="(item, index) in store.sponsored" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored"
-                        :sponsored="sponsored" />
-                </div>
-            </div>
+        <div class=" container-fluid text-center mt-5">
+            <carousel :items-to-show="5" >
+                <slide v-for="(slide, index) in store.sponsored" :key="index">
+                    <CardApComponent :apartment="slide" :index="index" :title="slide.name" :image="slide.cover_image"  :num_rooms="slide.num_rooms" :num_beds="slide.num_beds" :description="slide.description" :class="['bg-warning', 'sponsored']"/>
+                </slide>
+
+                <template #addons>
+                    <navigation />
+                    <pagination />
+                </template>
+            </carousel>
         </div>
     </div>
 </template>
@@ -21,12 +24,18 @@ import axios from 'axios';
 import { store } from '@/store';
 import JumboComponent from '@/components/JumboComponent.vue';
 import CardApComponent from '@/components/CardApComponent.vue';
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 export default {
     name: 'Home',
     components: {
         JumboComponent,
-        CardApComponent
+        CardApComponent,
+        Carousel,
+        Slide,
+        Pagination,
+        Navigation
     },
     data() {
         return {
@@ -98,5 +107,4 @@ export default {
 .card:hover .card__title::after {
     transform: translateX(0);
 }
-
 </style>

@@ -17,10 +17,11 @@
     "gsap": "^3.12.5",
     "lodash.debounce": "^4.0.8",
     "sass": "^1.74.1",
-    "swiper": "^11.1.4",
+    "swiper": "^7.4.1",
     "three": "^0.163.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.4.0"
+    "vue-router": "^4.4.0",
+    "vue3-carousel": "^0.3.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

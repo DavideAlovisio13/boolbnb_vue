@@ -14,8 +14,7 @@
           <p class="fs-4"><strong><i class="fa-solid fa-location-dot"></i>:</strong> {{ apartment.address }}</p>
         </div>
         <div class="right" v-if="apartment.cover_image">
-          <img src="/public/images/BG.png" alt="" class="apartment-image">
-          <!-- <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image"> -->
+          <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image">
         </div>
       </div>
       <div v-if="apartment.name" class="apartment-message">
