@@ -30,7 +30,7 @@ export default {
             notFound: 'Nessun risultato trovato',
             lat: null,
             lon: null,
-             routeName: ''
+            routeName: ''
         }
     },
     methods: {
@@ -93,7 +93,7 @@ export default {
             localStorage.setItem('lastSearchQuery', this.searchQuery);
         },
         loadSearchQuery() {
-            // Carica la query di ricerca salvata dal localStorage solo se l'utente è ancora sulla pagina di ricerca
+            
             if (this.$route.name === 'search') {
                 const savedQuery = localStorage.getItem('lastSearchQuery');
                 if (savedQuery) {
@@ -106,13 +106,13 @@ export default {
         this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
         //console.log('searchComponent created');
         this.routeName = this.$route.name;
+
         this.loadSearchQuery(); // Carica la query di ricerca salvata solo se l'utente è ancora sulla pagina di ricerca
     },
     watch: {
         '$route.name'(newVal, oldVal) {
-            // Gestisci il cambiamento della route
+            // cambia al cambiare della query
             if (newVal !== this.routeName) {
-                // Se l'utente naviga via dalla pagina di ricerca
                 this.searchQuery = ''; // Svuota la query di ricerca
             } else {
                 // Se l'utente è sulla stessa pagina di ricerca, carica la query di ricerca salvata
