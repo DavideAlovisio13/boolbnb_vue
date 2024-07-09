@@ -1,8 +1,6 @@
 <template>
     <div class="container text-center mt-5">
         <SearchComponent @search-performed="getApartments" />
-        <h3 v-if="searchAddress">Ultima ricerca: {{ searchAddress }}</h3>
-
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-light p-4">
                 <h5 class="text-body-emphasis h4">Filtri</h5>

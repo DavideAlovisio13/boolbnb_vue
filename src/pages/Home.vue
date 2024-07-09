@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <JumboComponent />
         <!-- Sezione per gli appartamenti sponsorizzati -->
         <div class="card">
@@ -9,21 +9,7 @@
             <div class="row row-cols-2 row-cols-lg-4 g-5 g-lg-3">
                 <div class="col" v-for="(item, index) in store.sponsored" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored"
-                        :sponsored="sponsored" />
-                </div>
-            </div>
-        </div>
-
-        <!-- Sezione per gli appartamenti non sponsorizzati -->
-        <div class="card mt-5">
-            <span class="card__title">Altri Appartamenti</span>
-        </div>
-        <div class="container text-center mt-2">
-            <div class="row row-cols-2 row-cols-lg-4 g-5 g-lg-3">
-                <div class="col" v-for="(item, index) in store.apartments" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
+                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
                 </div>
             </div>
         </div>
@@ -51,33 +37,29 @@ export default {
     data() {
         return {
             store,
-            sponsored: false
         }
     },
     methods: {
-        getApartments() {
-            axios.get('http://127.0.0.1:8000/api/apartments/base').then((response) => {
-                this.store.apartments = response.data.results;
-                //console.log('Apartments:', this.store.apartments);
-            }).catch((error) => {
-                console.error('API error:', error);
-            });
-        },
+        // getApartments() {
+        //     axios.get('http://127.0.0.1:8000/api/apartments/base').then((response) => {
+        //         this.store.apartments = response.data.results;
+        //         //console.log('Apartments:', this.store.apartments);
+        //     }).catch((error) => {
+        //         console.error('API error:', error);
+        //     });
+        // },
         getSponsored() {
-            axios.get('http://127.0.0.1:8000/api/apartments/sponsored').then((response) => {
+            axios.get(`${this.store.apiBaseUrl}apartments/sponsored`).then((response) => {
                 this.store.sponsored = response.data.results;
-                this.sponsored = true;
                 //console.log('Sponsored Apartments:', this.store.sponsored);
+
             }).catch((error) => {
                 console.error('API error:', error);
             });
         }
     },
     mounted() {
-        this.getApartments();
         this.getSponsored();
-        console.log(this.store.apartments);
-        console.log(this.store.sponsored);
     }
 }
 </script>
@@ -124,5 +106,4 @@ export default {
 .card:hover .card__title::after {
     transform: translateX(0);
 }
-
 </style>

@@ -26,7 +26,6 @@ export default {
     data() {
         return {
             searchQuery: '',
-            items: [],
             filteredItems: [],
             notFound: 'Nessun risultato trovato',
             lat: null,
@@ -39,7 +38,7 @@ export default {
                 this.searchQuery = this.filteredItems[0].address;
                 this.lat = this.filteredItems[0].lat;
                 this.lon = this.filteredItems[0].lon;
-
+                this.saveSearchQuery();
                 this.$emit('search-performed', {
                     query: this.searchQuery,
                     latitude: this.lat,
@@ -55,33 +54,28 @@ export default {
                 this.filteredItems = [];
                 return;
             }
-
-            try {
-                const response = await axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
-                    params: {
-                        key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
-                        radius: 20000,  // 20 km in metri
-                        limit: 5,
-                        countrySet: 'IT',
-                    }
-                });
+            await axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
+                params: {
+                    key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
+                    radius: 20000,  // 20 km in metri
+                    limit: 5,
+                    countrySet: 'IT',
+                }
+            }).then(response => {
                 this.filteredItems = response.data.results.map(item => ({
                     id: item.id,
                     address: item.address.freeformAddress,
                     lat: item.position.lat,
-                    lon: item.position.lon
+                    lon: item.position.lon,
                 }));
-
-            } catch (error) {
-                console.error('Errore durante la ricerca:', error);
-            }
+            }).catch((error) => console.error('API error:', error))
         },
         selectItem(item) {
             this.searchQuery = item.address;
             this.lat = item.lat;
             this.lon = item.lon;
             this.filteredItems = [];
-            this.address = item.address;
+            this.saveSearchQuery();
             this.$emit('search-performed', {
                 query: this.searchQuery,
                 latitude: this.lat,
@@ -91,10 +85,21 @@ export default {
         },
         updateUrl() {
             this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
+        },
+        saveSearchQuery() {
+            localStorage.setItem('lastSearchQuery', this.searchQuery);
+        },
+        loadSearchQuery() {
+            const savedQuery = localStorage.getItem('lastSearchQuery');
+            if (savedQuery) {
+                this.searchQuery = savedQuery;
+            }
         }
     },
     created() {
         this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
+        //console.log('searchComponent created');
+        this.loadSearchQuery();
     }
 }
 </script>
