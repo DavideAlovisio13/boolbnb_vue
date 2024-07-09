@@ -63,7 +63,28 @@ export default {
                 console.error('API error:', error);
             });
         },
+        toggleServiceSelection(serviceId) {
+            const index = this.selectedServiceId.indexOf(serviceId);
+            if (index === -1) {
+                this.selectedServiceId.push(serviceId);
+            } else {
+                this.selectedServiceId.splice(index, 1);
+            }
+            this.getFilterServices();
+        },
 
+
+        getFilterServices() {
+        axios.get(`${this.store.apiBaseUrl}apartments/services-filter/${this.searchAddress}/${this.latitude}/${this.longitude}/${this.selectedServiceId}`)
+        .then((response) => { 
+            this.filteredApartmentsBase = response.data.results.base;
+            this.filteredApartmentsSponsored = response.data.results.sponsored;
+            this.allApartments = [...this.filteredApartmentsSponsored, ...this.filteredApartmentsBase];
+        }).catch((error) => {
+            console.error('API error:', error);
+        })
+    },
+    
         extractParamsFromUrl(url) {
             const parts = url.split('/');
             const query = decodeURIComponent(parts[parts.indexOf('search') + 1]);
@@ -82,6 +103,7 @@ export default {
         this.longitude = longitude;
         this.getApartments({ query, latitude, longitude });
     },
+
 }
 </script>
 
