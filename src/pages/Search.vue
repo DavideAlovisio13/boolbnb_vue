@@ -9,7 +9,7 @@
                 <span class="text-body-secondary">
                     <div class="d-flex justify-content-between align-items-center">
                         <div v-for="(service, index) in services" :key="index" @click="toggleServiceFilter(service.id)"
-                            :class="{ 'selected-service': selectedServiceId === service.id }" class="service-item w-25">
+                            :class="{ 'selected-service': selectedServiceId.includes(service.id) }" class="service-item w-25">
                             <img :src="getServiceIconUrl(service.icon)" :alt="service.name" class="w-25" />
                             <p>{{ service.name }}</p>
                         </div>
@@ -26,7 +26,7 @@
                 </button>
             </div>
         </nav>
-        <div v-if="!selectedServiceId">
+        <div v-if="selectedServiceId.length === 0">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col m-5" v-for="(item, index) in apartmentsSponsored" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
@@ -74,7 +74,7 @@ export default {
             longitude: null,
             filteredApartmentsBase: [],
             filteredApartmentsSponsored: [],
-            selectedServiceId: null
+            selectedServiceId: []
         }
     },
 
@@ -93,17 +93,23 @@ export default {
             });
         },
         toggleServiceFilter(serviceId) {
-            if (this.selectedServiceId === serviceId) {
-                this.selectedServiceId = null;
-                this.getApartments({ query: this.searchAddress, latitude: this.latitude, longitude: this.longitude });
+            const index = this.selectedServiceId.indexOf(serviceId);
+            if (index === -1) {
+                this.selectedServiceId.push(serviceId);
             } else {
-                this.selectedServiceId = serviceId;
-                this.filterByService(serviceId);
+                this.selectedServiceId.splice(index, 1);
             }
+            this.filterByServices();
         },
-        filterByService(serviceId) {
-            const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(this.searchAddress)}/${this.latitude}/${this.longitude}/${serviceId}`;
-            axios.get(url).then((response) => {
+        
+            filterByServices() {
+            if (this.selectedServiceId.length === 0) {
+                this.filteredApartmentsBase = [...this.apartmentsBase];
+                this.filteredApartmentsSponsored = [...this.apartmentsSponsored];
+                return;
+            }
+            const url = `http://127.0.0.1:8000/api/apartments/search/${encodeURIComponent(this.searchAddress)}/${this.latitude}/${this.longitude}`;
+            axios.get(url, { params: { serviceId: this.selectedServiceId } }).then((response) => {
                 this.filteredApartmentsBase = response.data.results.base;
                 this.filteredApartmentsSponsored = response.data.results.sponsored;
             }).catch((error) => {

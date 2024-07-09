@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="brutalist-card__actions">
-            <router-link :to="{ name: 'apartment-detail', params: { id: apartment.id } }"
+            <router-link :to="{ name: 'apartment-detail', params: { slug: apartment.slug } }"
                 class="brutalist-card__button brutalist-card__button--read">Dettagli</router-link>
         </div>
     </div>

@@ -35,7 +35,7 @@ const router = createRouter({
         component: Search,
     },
     {
-        path: '/apartment/:id',
+        path: '/apartment/:slug',
         name: 'apartment-detail',
         component: ApartmentDetailComponent,
         props: true,

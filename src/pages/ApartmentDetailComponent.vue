@@ -88,7 +88,7 @@ export default {
   components: {
     MapComponent
   },
-  props: ['id'],
+  props: ['slug','id'],
   data() {
     return {
       store,
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     fetchApartmentDetails() {
-      fetch(`http://127.0.0.1:8000/api/apartments/${this.id}`)
+      fetch(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
         .then(response => response.json())
         .then(data => {
           this.apartment = data.results;
@@ -129,7 +129,7 @@ export default {
       }
       // Invia il messaggio al back end (Laravel)
       console.log(this.message);
-      axios.post(`${this.store.apiBaseUrl}/apartments/${this.id}/send-message`, this.message)
+      axios.post(`${this.store.apiBaseUrl}/apartments/${this.slug}/send-message`, this.message)
         .then(response => {
           console.log(response);
           alert('Messaggio inviato con successo!');
