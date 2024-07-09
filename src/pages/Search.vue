@@ -24,6 +24,7 @@
                 </button>
             </div>
         </nav>
+        <p>Numero di risultati: {{ this.allApartments.length }}</p>
         <div v-if="selectedServiceId.length === 0">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col m-5" v-for="(item, index) in apartmentsSponsored" :key="index">
@@ -38,13 +39,9 @@
         </div>
         <div v-else>
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div class="col m-5" v-for="(item, index) in filteredApartmentsSponsored" :key="index">
+                <div class="col m-5" v-for="(item, index) in allApartments" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                         :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']" />
-                </div>
-                <div class="col m-5" v-for="(item, index) in filteredApartmentsBase" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
                 </div>
             </div>
         </div>
@@ -72,6 +69,7 @@ export default {
             longitude: null,
             filteredApartmentsBase: [],
             filteredApartmentsSponsored: [],
+            allApartments:[],
             selectedServiceId: []
         }
     },
@@ -86,6 +84,7 @@ export default {
                 this.services = response.data.results.services;
                 this.filteredApartmentsBase = [...this.apartmentsBase];
                 this.filteredApartmentsSponsored = [...this.apartmentsSponsored];
+                this.allApartments = [...this.apartmentsSponsored, ...this.apartmentsBase];
             }).catch((error) => {
                 console.error('API error:', error);
             });
@@ -99,6 +98,7 @@ export default {
             }
             this.filterByServices();
         },
+        
         
             filterByServices() {
             if (this.selectedServiceId.length === 0) {
