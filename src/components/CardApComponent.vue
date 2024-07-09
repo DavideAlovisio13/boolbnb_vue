@@ -17,6 +17,7 @@
                         </p>
                         <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong> {{ apartment.square_meters
                             }} m²</p>
+                        <p v-if="apartment.distance" class="card-text">Distanza: {{ formatDistance(distance) }}</p>
                     </div>
                 </div>
             </div>
@@ -31,7 +32,12 @@
 <script>
 export default {
     name: 'CardApComponent',
-    props: ['apartment', 'index', 'title', 'image', 'num_rooms', 'num_beds', 'sponsored'],
+    props: ['apartment', 'index', 'title', 'image', 'num_rooms', 'num_beds', 'sponsored', 'distance'],
+    methods: {
+        formatDistance(distance) {
+            return distance.toFixed(2) + ' km';
+        }
+    },
     computed: {
         imageUrl() {
             return this.image ? `http://127.0.0.1:8000/storage/${this.image}` : 'https://via.placeholder.com/320x240';
