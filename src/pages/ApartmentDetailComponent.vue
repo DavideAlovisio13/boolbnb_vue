@@ -21,6 +21,13 @@
         <h2 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">Mappa</h2>
         <div class="row my-4">
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
+            <h3>Servizi</h3>
+            <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
+              <span><img :src="apartment.icon" alt=""></span>
+              : {{ apartment.name }}
+            </p>
+          </div>
+          <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <MapComponent :apartment="apartment" />
           </div>
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid ">
