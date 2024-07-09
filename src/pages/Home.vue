@@ -1,7 +1,6 @@
 <template>
-    <div>
+    <div >
         <JumboComponent />
-        
         <!-- Sezione per gli appartamenti sponsorizzati -->
         <div class="card">
             <span class="card__title">Sponsorizzati</span>

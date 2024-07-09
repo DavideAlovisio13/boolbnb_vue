@@ -9,9 +9,15 @@
             <div class="item-hints">
                 <div class="hint" data-position="4">
                     <span class="hint-radius"></span>
-                    <span class="hint-dot">Tip</span>
+                    <span class="hint-dot">Info </span>
                     <div class="hint-content do--split-children brutalist-card">
-                        <p>Use Navbar to navigate the website quickly and easily.</p>
+                        <p class="fs-4"><strong><i class="fa-solid fa-house-user"></i>:
+                            </strong> {{ apartment.num_rooms }}</p>
+                        <p class="fs-4"><strong><i class="fa-solid fa-bed"></i>:</strong> {{ apartment.num_beds }}</p>
+                        <p class="fs-4"><strong><i class="fa-solid fa-bath"></i>:</strong> {{ apartment.num_bathrooms }}
+                        </p>
+                        <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong> {{ apartment.square_meters
+                            }} m²</p>
                     </div>
                 </div>
             </div>
