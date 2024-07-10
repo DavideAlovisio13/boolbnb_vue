@@ -5,12 +5,25 @@
         <div class="card">
             <span class="card__title">Sponsorizzati</span>
         </div>
-        <div class="container text-center mt-2">
-            <div class="row row-cols-2 row-cols-lg-4 g-5 g-lg-3">
-                <div class="col" v-for="(item, index) in store.sponsored" :key="index">
+        <!-- <div class="left">
+            <div class="container text-center mt-2">
+                <div class="row row-cols-2 row-cols-lg-4 g-5 g-lg-3">
+                    <div class="col" v-for="(item, index) in store.sponsored" :key="index">
+                        <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
+                            :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="container d-flex">
+            <div class="left w-50">
+                <div class="" v-for="(item, index) in store.sponsored" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                         :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
                 </div>
+            </div>
+            <div class="right w-50">
+
             </div>
         </div>
     </section>
@@ -21,18 +34,12 @@ import axios from 'axios';
 import { store } from '@/store';
 import JumboComponent from '@/components/JumboComponent.vue';
 import CardApComponent from '@/components/CardApComponent.vue';
-import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 export default {
     name: 'Home',
     components: {
         JumboComponent,
         CardApComponent,
-        Carousel,
-        Slide,
-        Pagination,
-        Navigation
     },
     data() {
         return {
@@ -68,6 +75,7 @@ export default {
 #home_main {
     height: calc(100% - 1000px);
 }
+
 .card {
     width: 400px;
     padding: 20px;

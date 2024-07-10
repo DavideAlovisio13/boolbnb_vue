@@ -3,8 +3,8 @@
         <div class="brutalist-card__header">
             <div class="brutalist-card__alert">{{ title }}</div>
         </div>
-        <img src="/public/images/BG.png" alt="" class="brutalist-card__image">
-        <!-- <img :src="imageUrl" :alt="title" class="brutalist-card__image"> -->
+        <!-- <img src="/public/images/BG.png" alt="" class="brutalist-card__image"> -->
+        <img :src="imageUrl" :alt="title" class="brutalist-card__image">
         <div class="d-flex justify-content-between">
             <div class="item-hints">
                 <div class="hint" data-position="4">
