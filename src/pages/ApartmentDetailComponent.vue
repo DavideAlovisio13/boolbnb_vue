@@ -1,4 +1,5 @@
 <template>
+  <JumboComponent />
   <div class="container">
     <div class="apartment-details brutalist-card mt-2">
       <div class="top d-flex justify-content-between w-100">
@@ -80,13 +81,15 @@
 
 <script>
 import MapComponent from '@/components/MapComponent.vue';
+import JumboComponent from '@/components/JumboComponent.vue';
 import axios from 'axios';
 import { store } from '@/store';
 
 export default {
   name: 'ApartmentDetailComponent',
   components: {
-    MapComponent
+    MapComponent,
+    JumboComponent
   },
   props: ['slug','id'],
   data() {

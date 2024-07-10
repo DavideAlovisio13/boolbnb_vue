@@ -52,6 +52,7 @@ export default {
     components: {
         JumboComponent,
         CardApComponent,
+        showOptions: true
     },
     data() {
         return {

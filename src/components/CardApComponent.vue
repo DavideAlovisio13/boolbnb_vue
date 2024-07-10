@@ -7,7 +7,7 @@
         <img :src="imageUrl" :alt="title" class="brutalist-card__image">
         <div class="d-flex justify-content-between">
             <div class="item-hints">
-                <div class="hint" data-position="4">
+                <div class="hint" data-position="4" v-if="showOptions === true">
                     <span class="hint-radius"></span>
                     <span class="hint-dot">Info </span>
                     <div class="hint-content do--split-children brutalist-card">
