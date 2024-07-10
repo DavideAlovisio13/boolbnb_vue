@@ -44,6 +44,11 @@ export default {
 <style lang="scss" scoped>
 .nav {
     padding: 30px 0;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
 }
 
 .nav__container {

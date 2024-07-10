@@ -1,4 +1,5 @@
 <template>
+    <JumboComponent />
     <div class="container text-center mt-5">
         <SearchComponent @search-performed="getApartments" />
         <div class="d-flex justify-content-between align-items-center">
@@ -25,12 +26,13 @@ import axios from 'axios';
 import { store } from '../store';
 import CardApComponent from '../components/CardApComponent.vue';
 import SearchComponent from '../components/SearchComponent.vue';
-
+import JumboComponent from '@/components/JumboComponent.vue';
 export default {
     name: 'Search',
     components: {
         CardApComponent,
-        SearchComponent
+        SearchComponent,
+        JumboComponent
     },
     data() {
         return {
