@@ -15,14 +15,27 @@
                 </div>
             </div>
         </div> -->
-        <div class="container d-flex">
-            <div class="left w-50">
-                <div class="" v-for="(item, index) in store.sponsored" :key="index">
-                    <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
-                        :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
+        <div class="w-100 position-relative">
+            <button class="btn-17 position-absolute c-btn-left" @click="scrollLeft">
+                <span class="text-container">
+                    <span class="text fs-2"><i class="fa-solid fa-arrow-left"></i></span>
+                </span>
+            </button>
+            <div class="container mt-5">
+                <div ref="scrollContainer" class="left d-flex overflow-auto">
+                    <div class="p-4" v-for="(item, index) in store.sponsored" :key="index">
+                        <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
+                            :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
+                    </div>
                 </div>
             </div>
-            <div class="right w-50">
+
+            <button class="btn-17 position-absolute c-btn-right" @click="scrollRight">
+                <span class="text-container">
+                    <span class="text fs-2"><i class="fa-solid fa-arrow-right"></i></span>
+                </span>
+            </button>
+            <div class="right">
 
             </div>
         </div>
@@ -47,6 +60,14 @@ export default {
         }
     },
     methods: {
+        scrollLeft() {
+            const container = this.$refs.scrollContainer;
+            container.scrollBy({ left: -200, behavior: 'smooth' });
+        },
+        scrollRight() {
+            const container = this.$refs.scrollContainer;
+            container.scrollBy({ left: 200, behavior: 'smooth' });
+        },
         // getApartments() {
         //     axios.get('http://127.0.0.1:8000/api/apartments/base').then((response) => {
         //         this.store.apartments = response.data.results;
@@ -72,8 +93,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.c-btn-left {
+    top: 50%;
+    left: 500px;
+}
+
+.c-btn-right {
+    top: 50%;
+    right: 500px;
+}
+
 #home_main {
     height: calc(100% - 1000px);
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .card {
@@ -116,5 +152,145 @@ export default {
 
 .card:hover .card__title::after {
     transform: translateX(0);
+}
+
+.btn-17,
+.btn-17 *,
+.btn-17 :after,
+.btn-17 :before,
+.btn-17:after,
+.btn-17:before {
+    border: 0 solid;
+    box-sizing: border-box;
+}
+
+.btn-17 {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: button;
+    background-color: #000;
+    background-image: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 100%;
+    font-weight: 900;
+    line-height: 1.5;
+    -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.btn-17:disabled {
+    cursor: default;
+}
+
+.btn-17:-moz-focusring {
+    outline: auto;
+}
+
+.btn-17 svg {
+    display: block;
+    vertical-align: middle;
+}
+
+.btn-17 [hidden] {
+    display: none;
+}
+
+.btn-17 {
+    border-radius: 99rem;
+    border-width: 2px;
+    padding: 0.8rem 3rem;
+    z-index: 0;
+}
+
+.btn-17,
+.btn-17 .text-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-17 .text-container {
+    display: block;
+    mix-blend-mode: difference;
+}
+
+.btn-17 .text {
+    display: block;
+    position: relative;
+}
+
+.btn-17:hover .text {
+    -webkit-animation: move-up-alternate 0.3s forwards;
+    animation: move-up-alternate 0.3s forwards;
+}
+
+@-webkit-keyframes move-up-alternate {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(80%);
+    }
+
+    51% {
+        transform: translateY(-80%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes move-up-alternate {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(80%);
+    }
+
+    51% {
+        transform: translateY(-80%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.btn-17:after,
+.btn-17:before {
+    --skew: 0.2;
+    background: #fff;
+    content: "";
+    display: block;
+    height: 102%;
+    left: calc(-50% - 50% * var(--skew));
+    pointer-events: none;
+    position: absolute;
+    top: -104%;
+    transform: skew(calc(150deg * var(--skew))) translateY(var(--progress, 0));
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.btn-17:after {
+    --progress: 0%;
+    left: calc(50% + 50% * var(--skew));
+    top: 102%;
+    z-index: -1;
+}
+
+.btn-17:hover:before {
+    --progress: 100%;
+}
+
+.btn-17:hover:after {
+    --progress: -102%;
 }
 </style>
