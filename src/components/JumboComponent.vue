@@ -1,6 +1,8 @@
 <template>
     <div class="masthead text-center text-white d-flex flex-column" style="position: relative;">
-        <div id="quote" class=" px-4 mb-5">La tua casa lontano da casa</div>
+        <video src="/videos/video-jumbo.mp4" autoplay loop muted
+            style="position:absolute; z-index:-1; object-fit: cover; width: 100%; height: 100%;"></video>
+        <div id="quote" class="px-4 mb-5"></div>
         <div class="masthead-content">
             <div class="container px-5 d-flex justify-content-center align-items-center">
                 <SearchComponent />
@@ -12,22 +14,47 @@
 <script>
 import gsap from 'gsap';
 import SearchComponent from '@/components/SearchComponent.vue';
+
 export default {
     name: 'JumboComponent',
     components: {
         SearchComponent
     },
+    data() {
+        return {
+            phrases: [
+                "La tua casa lontano da casa",
+                "Benvenuto nella tua oasi di pace",
+                "Il tuo rifugio perfetto",
+                "Dove i tuoi sogni diventano realtà"
+            ],
+            currentPhraseIndex: 0
+        };
+    },
     methods: {
         animateQuote() {
             const quoteText = document.getElementById('quote');
-            const chars = quoteText.textContent.split('');
+            const phrase = this.phrases[this.currentPhraseIndex];
+            const chars = phrase.split('');
             quoteText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
-            gsap.fromTo(".char",
-                { opacity: 0, scale: 0.8 },
-                { opacity: 1, scale: 1, duration: 0.1, stagger: 0.05, ease: "power2.out" }
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    this.changePhrase();
+                }
+            });
+
+            tl.from(".char",
+                { opacity: 0, y: 50, scale: 0.8, stagger: 0.05, ease: "power3.out" }
+            ).to(".char",
+                { opacity: 0, y: -50, scale: 0.8, stagger: 0.05, ease: "power3.in" },
+                "+=2" // Attende 2 secondi prima di iniziare la dissolvenza
             );
         },
-
+        changePhrase() {
+            this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.phrases.length;
+            this.animateQuote();
+        }
     },
     mounted() {
         this.animateQuote();
@@ -47,7 +74,7 @@ export default {
 
 .masthead {
     width: 100%;
-    height: 500px;
+    height: 1000px;
     display: flex;
     align-items: center;
     justify-content: center;

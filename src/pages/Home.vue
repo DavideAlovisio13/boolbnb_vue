@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section id="home_main">
         <JumboComponent />
         <!-- Sezione per gli appartamenti sponsorizzati -->
         <div class="card">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -65,6 +65,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#home_main {
+    height: calc(100% - 1000px);
+}
 .card {
     width: 400px;
     padding: 20px;
