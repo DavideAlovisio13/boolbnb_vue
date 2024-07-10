@@ -23,7 +23,7 @@
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <h3>Servizi</h3>
             <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
-              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt=""></span>
+              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt="" class="icon-img"></span>
               : {{ apartment.name }}
             </p>
           </div>
@@ -128,7 +128,6 @@ export default {
         return;
       }
       // Invia il messaggio al back end (Laravel)
-      console.log(this.message);
       axios.post(`${this.store.apiBaseUrl}/apartments/${this.slug}/send-message`, this.message)
         .then(response => {
           console.log(response);
@@ -158,6 +157,9 @@ export default {
 </script>
 
 <style scoped>
+.icon-img{
+  width: 2rem;
+}
 .brutalist-card {
   width: 75%;
   margin: 0 auto;
