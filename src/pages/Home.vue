@@ -15,30 +15,29 @@
                 </div>
             </div>
         </div> -->
-        <div class="w-100 position-relative">
-            <button class="btn-17 position-absolute c-btn-left" @click="scrollLeft">
+        <div class="container position-relative mt-5">
+            <button class="btn btn-17 position-absolute start-0 top-50 translate-middle-y" @click="scrollLeft">
                 <span class="text-container">
                     <span class="text fs-2"><i class="fa-solid fa-arrow-left"></i></span>
                 </span>
             </button>
-            <div class="container mt-5">
-                <div ref="scrollContainer" class="left d-flex overflow-auto">
-                    <div class="p-4" v-for="(item, index) in store.sponsored" :key="index">
+
+            <div class="row overflow-hidden">
+                <div ref="scrollContainer" class="d-flex overflow-auto">
+                    <div class="col-12 col-md-6 col-lg-4 p-4" v-for="(item, index) in store.sponsored" :key="index">
                         <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                             :num_rooms="item.num_rooms" :num_beds="item.num_beds" :is_sponsored="item.is_sponsored" />
                     </div>
                 </div>
             </div>
 
-            <button class="btn-17 position-absolute c-btn-right" @click="scrollRight">
+            <button class="btn btn-17 position-absolute end-0 top-50 translate-middle-y" @click="scrollRight">
                 <span class="text-container">
                     <span class="text fs-2"><i class="fa-solid fa-arrow-right"></i></span>
                 </span>
             </button>
-            <div class="right">
-
-            </div>
         </div>
+
     </section>
 </template>
 
@@ -93,7 +92,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .c-btn-left {
     top: 50%;
     left: 500px;
@@ -106,6 +104,7 @@ export default {
 
 #home_main {
     height: calc(100% - 1000px);
+
 
     ::-webkit-scrollbar {
         display: none;
