@@ -128,7 +128,7 @@ export default {
         return;
       }
       // Invia il messaggio al back end (Laravel)
-      axios.post(`${this.store.apiBaseUrl}/apartments/${this.slug}/send-message`, this.message)
+      axios.post(`${this.store.apiBaseUrl}apartments/${this.slug}/send-message`, this.message)
         .then(response => {
           console.log(response);
           alert('Messaggio inviato con successo!');
