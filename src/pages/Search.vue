@@ -108,17 +108,6 @@ export default {
             this.getAdvancedSearchResults();
         },
 
-        // getFilterServices() {
-        //     axios.get(`${this.store.apiBaseUrl}apartments/services-filter/${this.searchAddress}/${this.latitude}/${this.longitude}/${this.selectedServiceId}`)
-        //         .then((response) => {
-        //             this.filteredApartmentsBase = response.data.results.base;
-        //             this.filteredApartmentsSponsored = response.data.results.sponsored;
-        //             this.allApartments = [...this.filteredApartmentsSponsored, ...this.filteredApartmentsBase];
-        //         }).catch((error) => {
-        //             console.error('API error:', error);
-        //         })
-        // },
-
         getAdvancedSearchResults() {
             const query = this.searchAddress;
             const latitude = this.latitude;
