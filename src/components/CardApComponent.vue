@@ -3,25 +3,16 @@
         <div class="brutalist-card__header">
             <div class="brutalist-card__alert">{{ title }}</div>
         </div>
-        <!-- <img src="/public/images/BG.png" alt="" class="brutalist-card__image"> -->
-        <img :src="imageUrl" :alt="title" class="brutalist-card__image">
-        <div class="d-flex justify-content-between">
-            <div class="item-hints">
-                <div class="hint" data-position="4" >
-                    <span class="hint-radius"></span>
-                    <span class="hint-dot">Info </span>
-                    <div class="hint-content do--split-children brutalist-card">
-                        <p class="fs-4"><strong><i class="fa-solid fa-house-user"></i>:
-                            </strong> {{ apartment.num_rooms }}</p>
-                        <p class="fs-4"><strong><i class="fa-solid fa-bed"></i>:</strong> {{ apartment.num_beds }}</p>
-                        <p class="fs-4"><strong><i class="fa-solid fa-bath"></i>:</strong> {{ apartment.num_bathrooms }}
-                        </p>
-                        <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong> {{ apartment.square_meters
-                            }} m²</p>
-                        <p v-if="apartment.distance" class="card-text">Distanza: {{ formatDistance(distance) }}</p>
-                    </div>
-                </div>
-            </div>
+        <img src="/public/images/BG.png" alt="" class="brutalist-card__image">
+        <!-- <img :src="imageUrl" :alt="title" class="brutalist-card__image"> -->
+        <div class="hint-content do--split-children d-flex w-100 align-items-center justify-content-between pt-4">
+            <p class="fs-4"><strong><i class="fa-solid fa-house-user"></i>:</strong>{{ apartment.num_rooms }}</p>
+            <p class="fs-4"><strong><i class="fa-solid fa-bed"></i>:</strong>{{ apartment.num_beds }}</p>
+            <p class="fs-4"><strong><i class="fa-solid fa-bath"></i>:</strong>{{ apartment.num_bathrooms }}
+            </p>
+            <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong>{{ apartment.square_meters
+                }} m²</p>
+            <p v-if="apartment.distance" class="card-text">Distanza:{{ formatDistance(distance) }}</p>
         </div>
         <div class="brutalist-card__actions">
             <router-link :to="{ name: 'apartment-detail', params: { slug: apartment.slug } }"
@@ -49,7 +40,8 @@ export default {
 
 <style lang="scss" scoped>
 .brutalist-card {
-    width: 320px;
+    width: 350px;
+    height: 500px;
     border: 4px solid #000;
     background-color: #fff;
     padding: 1.5rem;
@@ -58,7 +50,7 @@ export default {
 }
 
 .brutalist-card--sponsored {
-    width: 320px;
+    width: 350px;
     border: 4px solid #000;
     background-color: #e9b50b;
     padding: 1.5rem;
@@ -93,7 +85,7 @@ export default {
 .brutalist-card__alert {
     font-weight: 900;
     color: #000;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     text-transform: uppercase;
 }
 

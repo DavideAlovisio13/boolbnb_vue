@@ -19,3 +19,9 @@ body {
 h1 {
     color: $color-gray-200;
 }
+
+.template-bg {
+    background-image: url(/images/bg-main.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
