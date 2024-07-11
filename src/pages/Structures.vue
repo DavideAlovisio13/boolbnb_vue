@@ -3,12 +3,12 @@
         style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
         <div class="top-card">
             <div class="card">
-                <span class="card__title">Sponsorizzati</span>
+                <span class="card__title">Le nostre strutture</span>
             </div>
         </div>
         <div class="container text-center">
             <div class="row row-cols-4">
-                <div class="co p-3 mx-5" v-for="(item, index) in store.apartments" :key="index">
+                <div class="col p-3 mx-5 card-ap" v-for="(item, index) in store.apartments" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                         :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
                 </div>
@@ -16,6 +16,7 @@
         </div>
     </section>
 </template>
+
 
 
 <script>
@@ -36,14 +37,29 @@ export default {
         getApartments() {
             axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
                 this.store.apartments = response.data.results;
-
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.animateCards();
+                    }, 1000);
+                    
+                });
             })
+        },
+        animateCards() {
+            gsap.from(".card-ap", {
+                opacity: 0,
+                y: 50,
+                duration: 5,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
         },
     },
     mounted() {
         this.getApartments();
     }
 }
+
 </script>
 
 <style lang="scss" scoped>

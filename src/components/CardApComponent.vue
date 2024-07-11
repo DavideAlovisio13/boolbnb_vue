@@ -46,6 +46,12 @@ export default {
     padding: 1.5rem;
     box-shadow: 10px 10px 0 #000;
     font-family: "Arial", sans-serif;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 15px 15px 0 #000;
+    }
 }
 
 .brutalist-card--sponsored {
