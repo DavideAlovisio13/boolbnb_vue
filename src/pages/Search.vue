@@ -10,9 +10,7 @@
                 :class="{ 'selected-service': selectedServiceId.includes(service.id) }"
                 class="service-item w-25 btn-ser d-flex flex-column align-items-center justify-content-start "
                 @click="toggleServiceSelection(service.id)">
-                <!-- <img :src="getServiceIconUrl(service.icon)" :alt="service.name" class="w-25" /> -->
-                <img src="/public/images/bg-main.png" :alt="service.name"
-                    style="width: 50px; height: 50px; aspect-ratio: 1 / 1; padding-bottom: 10px;" />
+                <img :src="getServiceIconUrl(service.icon)" :alt="service.name" style="width: 50px; height: 50px; aspect-ratio: 1 / 1; padding-bottom: 10px;" />
                 <p style="font-family: 'Courier New', monospace; font-weight: bold;"> {{ service.name }}</p>
             </button>
         </div>

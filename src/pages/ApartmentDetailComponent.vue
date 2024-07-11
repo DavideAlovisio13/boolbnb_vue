@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <video src="/videos/video-main.mp4" autoplay loop muted
+    style=" position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%"></video>
+  <div class="container h-100">
     <div class="apartment-details brutalist-card mt-2">
       <div class="top d-flex justify-content-between w-100">
         <div class="left " v-if="apartment.name">
@@ -31,7 +33,8 @@
             <MapComponent :apartment="apartment" />
           </div>
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid ">
-            <b-button class="brutalist-card__button" variant="danger" @click="showModal = true">Invia un messaggio al proprietario</b-button>
+            <b-button class="brutalist-card__button" variant="danger" @click="showModal = true">Invia un messaggio al
+              proprietario</b-button>
           </div>
         </div>
       </div>
@@ -88,7 +91,7 @@ export default {
   components: {
     MapComponent
   },
-  props: ['slug','id'],
+  props: ['slug', 'id'],
   data() {
     return {
       store,
@@ -157,9 +160,14 @@ export default {
 </script>
 
 <style scoped>
-.icon-img{
+.container {
+  padding-top: 200px;
+}
+
+.icon-img {
   width: 2rem;
 }
+
 .brutalist-card {
   width: 75%;
   margin: 0 auto;
