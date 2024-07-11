@@ -41,7 +41,6 @@ export default {
 <style lang="scss" scoped>
 .brutalist-card {
     width: 350px;
-    height: 500px;
     border: 4px solid #000;
     background-color: #fff;
     padding: 1.5rem;
