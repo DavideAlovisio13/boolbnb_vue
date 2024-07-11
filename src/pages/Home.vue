@@ -1,9 +1,10 @@
 <template>
     <JumboComponent />
-    <section id="home_main template-bg">
+    <section id="home_main template-bg position-relative h-100 w-100" >
+        <video src="/videos/video-main.mp4" autoplay loop muted style=" position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%"></video>
         <!-- Sezione per gli appartamenti sponsorizzati -->
-        <div id="sponsor">
-            <div class="card mt-5">
+        <div id="sponsor pt-5">
+            <div class="card">
                 <span class="card__title">Sponsorizzati</span>
             </div>
             <div id="cards-section">
@@ -80,7 +81,7 @@ export default {
     border: 6px solid #000;
     box-shadow: 12px 12px 0 #000;
     transition: transform 0.3s, box-shadow 0.3s;
-    margin: 10px 80px;
+    margin: 0px 80px;
 }
 
 .card:hover {
