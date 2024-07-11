@@ -1,16 +1,28 @@
 <template>
+    <!-- Jumbo Component -->
     <JumboComponent />
-    <section id="home_main template-bg position-relative h-100 w-100" >
-        <video src="/videos/video-main.mp4" autoplay loop muted style=" position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%"></video>
-        <!-- Sezione per gli appartamenti sponsorizzati -->
-        <div id="sponsor pt-5">
+
+    <!-- Main Section with Background Video -->
+    <section id="home_main" class="template-bg position-relative h-100 w-100">
+        <!-- Background Video -->
+        <video src="/videos/video-main.mp4" autoplay loop muted
+            style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
+        </video>
+
+        <!-- Sponsored Apartments Section -->
+        <div id="sponsor" class="pt-5">
+            <!-- Title Card -->
             <div class="card">
                 <span class="card__title">Sponsorizzati</span>
             </div>
+
+            <!-- Cards Section -->
             <div id="cards-section">
                 <div class="container text-center">
                     <div class="row row-cols-3">
+                        <!-- Loop through Sponsored Apartments -->
                         <div class="col py-5" v-for="(item, index) in store.sponsored" :key="index">
+                            <!-- Card Component for Each Apartment -->
                             <CardApComponent :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"
                                 :is_sponsored="item.is_sponsored" />
@@ -21,6 +33,7 @@
         </div>
     </section>
 </template>
+
 
 <script>
 import axios from 'axios';

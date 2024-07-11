@@ -1,8 +1,12 @@
 <template>
+    <!-- Masthead section with video background and centered content -->
     <div class="masthead text-center text-white d-flex flex-column" style="position: relative;">
+        <!-- Background video -->
         <video src="/videos/video-jumbo.mp4" autoplay loop muted
             style="position:absolute; z-index:-1; object-fit: cover; width: 100%; height: 100%;"></video>
+        <!-- Quote container -->
         <div id="quote" class="px-4 mb-5"></div>
+        <!-- Masthead content with search component -->
         <div class="masthead-content">
             <div class="container px-5 d-flex justify-content-center align-items-center">
                 <SearchComponent />
@@ -32,6 +36,7 @@ export default {
         };
     },
     methods: {
+        // Method to animate the quote text
         animateQuote() {
             const quoteText = document.getElementById('quote');
             const phrase = this.phrases[this.currentPhraseIndex];
@@ -48,9 +53,10 @@ export default {
                 { opacity: 0, y: 50, scale: 0.8, stagger: 0.05, ease: "power3.out" }
             ).to(".char",
                 { opacity: 0, y: -50, scale: 0.8, stagger: 0.05, ease: "power3.in" },
-                "+=2" // Attende 2 secondi prima di iniziare la dissolvenza
+                "+=2" // Waits 2 seconds before starting the fade out
             );
         },
+        // Method to change the current phrase and re-trigger the animation
         changePhrase() {
             this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.phrases.length;
             this.animateQuote();
@@ -63,6 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* Styling for the quote text */
 #quote {
     font-family: "Courier New", monospace;
     font-size: 6rem;
@@ -72,6 +79,7 @@ export default {
     text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000, 2px 2px 5px #000;
 }
 
+/* Styling for the masthead container */
 .masthead {
     width: 100%;
     height: 1000px;

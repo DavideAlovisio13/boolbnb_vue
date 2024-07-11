@@ -1,20 +1,34 @@
 <template>
+    <!-- Jumbo Component -->
     <JumboComponent />
+
+    <!-- Background Video -->
     <video src="/videos/video-main.mp4" autoplay loop muted
-        style=" position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%"></video>
+        style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
+    </video>
+
     <div class="container text-center mt-5">
+        <!-- Search Component -->
         <SearchComponent @search-performed="getApartments" />
+
+        <!-- Services Title -->
         <h4 class="fs-2 pt-3" style="font-family: 'Courier New', monospace; font-weight: bold;">Servizi</h4>
+
+        <!-- Services Buttons -->
         <div class="d-flex justify-content-between align-items-start pt-3">
             <button v-for="(service, index) in services" :key="index"
                 :class="{ 'selected-service': selectedServiceId.includes(service.id) }"
-                class="service-item w-25 btn-ser d-flex flex-column align-items-center justify-content-start "
+                class="service-item w-25 btn-ser d-flex flex-column align-items-center justify-content-start"
                 @click="toggleServiceSelection(service.id)">
-                <img :src="getServiceIconUrl(service.icon)" :alt="service.name" style="width: 50px; height: 50px; aspect-ratio: 1 / 1; padding-bottom: 10px;" />
-                <p style="font-family: 'Courier New', monospace; font-weight: bold;"> {{ service.name }}</p>
+                <img :src="getServiceIconUrl(service.icon)" :alt="service.name"
+                    style="width: 50px; height: 50px; aspect-ratio: 1 / 1; padding-bottom: 10px;" />
+                <p style="font-family: 'Courier New', monospace; font-weight: bold;">{{ service.name }}</p>
             </button>
         </div>
+
+        <!-- Filter Options -->
         <div class="d-flex justify-content-between align-items-center">
+            <!-- Number of Rooms Filter -->
             <div class="d-flex flex-column">
                 <label for="num_rooms">Numero camere</label>
                 <select name="num_rooms" id="num_rooms" v-model="num_rooms">
@@ -26,9 +40,11 @@
                     <option value="5">5 o più camere</option>
                 </select>
             </div>
+
+            <!-- Number of Beds Filter -->
             <div class="d-flex flex-column">
-                <label for="num_rooms">Numero letti</label>
-                <select name="num_rooms" id="num_rooms" v-model="num_beds">
+                <label for="num_beds">Numero letti</label>
+                <select name="num_beds" id="num_beds" v-model="num_beds">
                     <option value="all">Qualsiasi</option>
                     <option value="1">1 posto letto</option>
                     <option value="2">2 posti letto</option>
@@ -37,19 +53,27 @@
                     <option value="5">5 o più posti letto</option>
                 </select>
             </div>
+
+            <!-- Distance Filter -->
             <div class="d-flex flex-column">
                 <label for="distance">Distanza</label>
                 <input type="range" v-model="distance" name="distance" id="distance" min="3" max="50" value="20"
                     step="1">
                 <span>{{ distance }} km</span>
             </div>
-            <button>
-                <span class="button_top" @click="getAdvancedSearchResults"> Applica i filtri
-                </span>
+
+            <!-- Apply Filters Button -->
+            <button @click="getAdvancedSearchResults">
+                <span class="button_top">Applica i filtri</span>
             </button>
         </div>
-        <p class="py-5"  style="font-family: 'Courier New', monospace; font-weight: bold;">Numero di risultati: {{ this.allApartments.length }}</p>
-        <div class="row ow row-cols-4">
+
+        <!-- Number of Results -->
+        <p class="py-5" style="font-family: 'Courier New', monospace; font-weight: bold;">Numero di risultati: {{
+            allApartments.length }}</p>
+
+        <!-- Apartments Cards -->
+        <div class="row row-cols-4">
             <div class="col mx-5 p-3" v-for="(item, index) in allApartments" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                     :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']"
@@ -58,6 +82,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios';

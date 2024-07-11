@@ -1,5 +1,7 @@
 <template>
+    <!-- Contenitore principale del componente di ricerca -->
     <div>
+        <!-- Input di ricerca con pulsante -->
         <div class="input-container d-flex">
             <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
                 @input="debouncedPerformSearch" @keyup.enter="performSearch" />
@@ -7,12 +9,15 @@
                 <button @click="performSearch" class="nav-link pt-3">{{ 'Cerca...' }}</button>
             </span>
         </div>
+
+        <!-- Risultati della ricerca -->
         <div v-if="searchQuery" :class="{ 'd-none': filteredItems.length === 0 }" class="search-results">
             <ul v-if="filteredItems.length" class="list-unstyled">
                 <li v-for="item in filteredItems" :key="item.id" @click="selectItem(item)">
                     {{ item.address }}
                 </li>
             </ul>
+            <p v-if="filteredItems.length === 0">{{ notFound }}</p>
         </div>
     </div>
 </template>
@@ -25,98 +30,115 @@ export default {
     name: 'SearchComponent',
     data() {
         return {
-            searchQuery: '',
-            filteredItems: [],
-            notFound: 'Nessun risultato trovato',
-            lat: null,
-            lon: null,
-            routeName: ''
+            searchQuery: '', // Query di ricerca dell'utente
+            filteredItems: [], // Elementi filtrati per suggerimenti
+            notFound: 'Nessun risultato trovato', // Messaggio mostrato se non ci sono risultati
+            lat: null, // Latitudine selezionata
+            lon: null, // Longitudine selezionata
+            routeName: '' // Nome della rotta attuale
         }
     },
     methods: {
+        // Esegue la ricerca quando l'utente preme il pulsante "Cerca"
         async performSearch() {
             if (this.filteredItems.length > 0) {
+                // Imposta la query di ricerca con il primo risultato trovato
                 this.searchQuery = this.filteredItems[0].address;
                 this.lat = this.filteredItems[0].lat;
                 this.lon = this.filteredItems[0].lon;
+
+                // Emessa dell'evento di ricerca con latitudine e longitudine
                 this.$emit('search-performed', {
                     query: this.searchQuery,
                     latitude: this.lat,
                     longitude: this.lon
                 });
 
-                // Aggiorna l'URL
+                // Aggiorna l'URL nella barra degli indirizzi del browser
                 this.updateUrl();
 
+                // Salva la query di ricerca nell'archiviazione locale
                 this.saveSearchQuery();
             }
         },
+        // Ottiene i suggerimenti di ricerca usando l'API TomTom Maps
         async fetchSuggestions() {
+            // Effettua la richiesta solo se la lunghezza della query è maggiore di 2 caratteri
             if (this.searchQuery.length < 2) {
                 this.filteredItems = [];
                 return;
             }
+
+            // Esegui la chiamata API per ottenere i suggerimenti di ricerca
             await axios.get(`https://api.tomtom.com/search/2/search/${this.searchQuery}.json`, {
                 params: {
                     key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI',
-                    radius: 20000,  // 20 km in metri
-                    limit: 5,
-                    countrySet: 'IT',
+                    radius: 20000,  // Raggio di ricerca (20 km in metri)
+                    limit: 5, // Limite massimo di risultati
+                    countrySet: 'IT', // Set di paesi (Italia)
                 }
             }).then(response => {
+                // Mappa i risultati ricevuti dalla risposta API ai dati necessari
                 this.filteredItems = response.data.results.map(item => ({
                     id: item.id,
                     address: item.address.freeformAddress,
                     lat: item.position.lat,
                     lon: item.position.lon,
                 }));
-            }).catch((error) => console.error('API error:', error))
+            }).catch((error) => console.error('API error:', error));
         },
+        // Selezione di un elemento dai suggerimenti di ricerca
         selectItem(item) {
-            this.searchQuery = item.address;
-            this.lat = item.lat;
-            this.lon = item.lon;
-            this.filteredItems = [];
+            this.searchQuery = item.address; // Imposta la query di ricerca con l'indirizzo selezionato
+            this.lat = item.lat; // Imposta la latitudine con quella dell'indirizzo selezionato
+            this.lon = item.lon; // Imposta la longitudine con quella dell'indirizzo selezionato
+            this.filteredItems = []; // Svuota l'array dei risultati filtrati
+
+            // Emessa dell'evento di ricerca con latitudine e longitudine
             this.$emit('search-performed', {
                 query: this.searchQuery,
                 latitude: this.lat,
                 longitude: this.lon
             });
+
+            // Aggiorna l'URL nella barra degli indirizzi del browser
             this.updateUrl();
-            
+
+            // Salva la query di ricerca nell'archiviazione locale
             this.saveSearchQuery();
         },
+        // Aggiorna l'URL nella barra degli indirizzi del browser
         updateUrl() {
             this.$router.push({ name: 'search', params: { query: this.searchQuery, lat: this.lat, lon: this.lon } });
         },
+        // Salva la query di ricerca nell'archiviazione locale
         saveSearchQuery() {
             localStorage.setItem('lastSearchQuery', this.searchQuery);
         },
+        // Carica la query di ricerca salvata dall'archiviazione locale
         loadSearchQuery() {
-            
+            // Controlla se l'utente è sulla pagina di ricerca attuale
             if (this.$route.name === 'search') {
                 const savedQuery = localStorage.getItem('lastSearchQuery');
                 if (savedQuery) {
-                    this.searchQuery = savedQuery;
+                    this.searchQuery = savedQuery; // Carica la query di ricerca salvata
                 }
             }
         }
     },
     created() {
-        this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500);
-        //console.log('searchComponent created');
-        this.routeName = this.$route.name;
+        this.debouncedPerformSearch = debounce(this.fetchSuggestions, 500); // Utilizza debounce per migliorare le prestazioni durante la digitazione
+        this.routeName = this.$route.name; // Ottiene il nome della rotta attuale
 
         this.loadSearchQuery(); // Carica la query di ricerca salvata solo se l'utente è ancora sulla pagina di ricerca
     },
     watch: {
+        // Osserva il cambio della rotta per gestire la pulizia della query di ricerca
         '$route.name'(newVal, oldVal) {
-            // cambia al cambiare della query
             if (newVal !== this.routeName) {
-                this.searchQuery = ''; // Svuota la query di ricerca
+                this.searchQuery = ''; // Svuota la query di ricerca se la rotta cambia
             } else {
-                // Se l'utente è sulla stessa pagina di ricerca, carica la query di ricerca salvata
-                this.loadSearchQuery();
+                this.loadSearchQuery(); // Carica la query di ricerca salvata se l'utente è sulla stessa pagina di ricerca
             }
         }
     }
@@ -124,6 +146,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* Stili per l'input di ricerca */
 .input {
     width: 500px;
     max-width: 270px;
@@ -165,6 +188,7 @@ export default {
     max-width: 270px;
 }
 
+/* Stili per i risultati della ricerca */
 .search-results {
     background-color: #ffffff;
     color: black;
@@ -186,49 +210,5 @@ export default {
 .list-unstyled {
     padding-left: 0;
     list-style: none;
-}
-
-.button {
-    height: 50px;
-    width: 200px;
-    position: relative;
-    background-color: transparent;
-    cursor: pointer;
-    border: 2px solid #252525;
-    overflow: hidden;
-    border-radius: 30px;
-    color: #333;
-    transition: all 0.5s ease-in-out;
-}
-
-.btn-txt {
-    z-index: 1;
-    font-weight: 800;
-    letter-spacing: 4px;
-}
-
-.type1::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: all 0.5s ease-in-out;
-    background-color: #333;
-    border-radius: 30px;
-    visibility: hidden;
-    height: 10px;
-    width: 10px;
-    z-index: -1;
-}
-
-.button:hover {
-    box-shadow: 1px 1px 200px #252525;
-    color: #fff;
-    border: none;
-}
-
-.type1:hover::after {
-    visibility: visible;
-    transform: scale(100) translateX(2px);
 }
 </style>

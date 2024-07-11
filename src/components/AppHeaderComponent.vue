@@ -1,8 +1,11 @@
 <template>
+    <!-- Navigation Bar -->
     <div class="nav">
         <div class="nav__container">
+            <!-- Shadow Effect for Nav Container -->
             <div class="shadow__nav"></div>
             <div class="input__search">
+                <!-- Navigation Items -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row justify-content-around align-items-center">
                     <li class="nav-item input__button__shadow" v-for="(item, index) in navItems" :key="index">
                         <router-link :to="{ name: item.routeName }" class="nav-link">{{ item.name }}</router-link>
@@ -18,23 +21,12 @@ export default {
     name: 'AppHeaderComponent',
     data() {
         return {
+            // Navigation items data
             navItems: [
-                {
-                    name: "Home",
-                    routeName: "home"
-                },
-                {
-                    name: "About",
-                    routeName: "about"
-                },
-                {
-                    name: "Contatti",
-                    routeName: "contacts"
-                },
-                {
-                    name: "Strutture",
-                    routeName: "structures"
-                }
+                { name: "Home", routeName: "home" },
+                { name: "About", routeName: "about" },
+                { name: "Contatti", routeName: "contacts" },
+                { name: "Strutture", routeName: "structures" }
             ]
         }
     },
@@ -42,6 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* General Navigation Styles */
 .nav {
     padding: 30px 0;
     background-color: transparent;
@@ -51,6 +44,7 @@ export default {
     top: 0;
 }
 
+/* Container for Navigation Bar */
 .nav__container {
     position: relative;
     display: flex;
@@ -67,11 +61,13 @@ export default {
     box-shadow: 10px 10px 0 #000;
 }
 
+/* Hover effect for Navigation Container */
 .nav__container:hover {
-    transform: rotateX(5deg) rotateY(1 deg) scale(1.05);
+    transform: rotateX(5deg) rotateY(1deg) scale(1.05);
     box-shadow: 25px 25px 0 -5px #e9b50b, 25px 25px 0 0 #000;
 }
 
+/* Shadow effect for Navigation Container */
 .shadow__nav {
     content: "";
     position: absolute;
@@ -87,6 +83,7 @@ export default {
     filter: blur(20px);
 }
 
+/* Button Styles for Navigation Items */
 .input__button__shadow {
     cursor: pointer;
     border: 3px solid #000;
@@ -101,21 +98,23 @@ export default {
     z-index: 3;
     font-weight: bold;
     font-family: "Courier New", monospace;
-    
 }
 
+/* Hover effect for Navigation Buttons */
 .input__button__shadow:hover {
     background: #e9b50b;
     transform: translateZ(10px) translateX(-5px) translateY(-5px);
     box-shadow: 5px 5px 0 0 #000;
 }
 
+/* SVG Icon Styles within Buttons */
 .input__button__shadow svg {
     fill: #000;
     width: 25px;
     height: 25px;
 }
 
+/* Search Input Styles */
 .input__search {
     width: 100%;
     outline: none;
@@ -132,12 +131,14 @@ export default {
     letter-spacing: -0.5px;
 }
 
+/* Placeholder Text Styles for Search Input */
 .input__search::placeholder {
     color: #666;
     font-weight: bold;
     text-transform: uppercase;
 }
 
+/* Hover and Focus Styles for Search Input */
 .input__search:hover,
 .input__search:focus {
     background: #f0f0f0;
@@ -145,6 +146,7 @@ export default {
     box-shadow: 5px 5px 0 0 #000;
 }
 
+/* Before Pseudo-element for Input Container */
 .input__container::before {
     content: "USERNAME";
     position: absolute;
