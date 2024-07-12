@@ -62,9 +62,10 @@ export default {
         //     });
         // },
         getSponsored() {
+            this.store.sponsored = [];
             axios.get(`${this.store.apiBaseUrl}apartments/sponsored`).then((response) => {
                 this.store.sponsored = response.data.results;
-                //console.log('Sponsored Apartments:', this.store.sponsored);
+                console.log('Sponsored Apartments:', this.store.sponsored);
 
             }).catch((error) => {
                 console.error('API error:', error);
