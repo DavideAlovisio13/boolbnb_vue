@@ -1,6 +1,4 @@
 <template>
-    <!-- Jumbo Component -->
-    <JumboComponent />
 
     <!-- Background Video -->
     <video src="/videos/video-main.mp4" autoplay loop muted
@@ -340,5 +338,9 @@ button:active .button_top {
     background-color: #FFC107;
     border: 2px solid #a9a9a9;
     border-radius: 5px;
+}
+
+.container {
+    padding-top: 200px;
 }
 </style>
