@@ -72,8 +72,8 @@
             allApartments.length }}</p>
 
         <!-- Apartments Cards -->
-        <div class="row row-cols-4">
-            <div class="col mx-5 p-3" v-for="(item, index) in allApartments" :key="index">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in allApartments" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                     :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']"
                     :distance="item.distance" />
