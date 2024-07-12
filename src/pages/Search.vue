@@ -20,7 +20,8 @@
                 @click="toggleServiceSelection(service.id)">
                 <img :src="getServiceIconUrl(service.icon)" :alt="service.name"
                     style="width: 50px; height: 50px; aspect-ratio: 1 / 1; padding-bottom: 10px;" />
-                <p style="font-family: 'Courier New', monospace; font-weight: bold;">{{ service.name }}</p>
+                <p style="font-family: 'Courier New', monospace; font-weight: bold; color: black;">{{ service.name }}
+                </p>
             </button>
         </div>
 
