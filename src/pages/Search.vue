@@ -5,7 +5,7 @@
         style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
     </video>
 
-    <div class="container text-center mt-5">
+    <div class="container text-center mt-5 h-100">
         <!-- Search Component -->
         <SearchComponent @search-performed="getApartments" />
 
