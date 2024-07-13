@@ -21,7 +21,7 @@
                 <div class="container text-center">
                     <div class="row row-cols-3">
                         <!-- Loop through Sponsored Apartments -->
-                        <div class="col py-5" v-for="(item, index) in store.sponsored" :key="index">
+                        <div class="col-4 col-md-6 py-5" v-for="(item, index) in store.sponsored" :key="index">
                             <!-- Card Component for Each Apartment -->
                             <CardApComponent :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"
