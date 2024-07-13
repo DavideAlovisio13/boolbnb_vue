@@ -3,7 +3,7 @@
     <div>
         <!-- Input di ricerca con pulsante -->
         <div class="input-container d-flex">
-            <input class="input" name="text" type="text" placeholder="Cerca..." v-model="searchQuery"
+            <input class="input" name="text" type="text" placeholder="Inserisci località" v-model="searchQuery"
                 @input="debouncedPerformSearch" @keyup.enter="performSearch" />
             <span class="ms-3 d-flex justify-content-center align-items-center">
                 <button @click="performSearch" class="nav-link pt-3">{{ 'Cerca...' }}</button>

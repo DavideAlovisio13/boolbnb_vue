@@ -24,9 +24,9 @@ export default {
             // Navigation items data
             navItems: [
                 { name: "Home", routeName: "home" },
+                { name: "Strutture", routeName: "structures" },
                 { name: "About", routeName: "about" },
-                { name: "Contatti", routeName: "contacts" },
-                { name: "Strutture", routeName: "structures" }
+                { name: "Accedi", routeName: "accedi" },
             ]
         }
     },

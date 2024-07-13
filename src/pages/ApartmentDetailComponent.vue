@@ -6,7 +6,7 @@
       <div class="top d-flex justify-content-between w-100">
         <div class="left " v-if="apartment.name">
           <h1 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">{{
-            apartment.name }}</h1>
+          apartment.name }}</h1>
           <p class="fs-4"><strong>Descrizione:</strong> {{ apartment.description }}</p>
           <p class="fs-4"><strong><i class="fa-solid fa-house-user"></i>:
             </strong> {{ apartment.num_rooms }}</p>
@@ -32,6 +32,9 @@
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <MapComponent :apartment="apartment" />
           </div>
+          <b-toast id="message-toast" v-model="showToast" :title="toastTitle" variant="success" auto-hide-delay="10000" class="mt-3">
+            {{ toastMessage }}
+          </b-toast>
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid ">
             <b-button class="brutalist-card__button" variant="danger" @click="showModal = true">Invia un messaggio al
               proprietario</b-button>
@@ -48,6 +51,7 @@
         <div class="dot-spinner__dot"></div>
         <div class="dot-spinner__dot"></div>
       </div>
+
 
       <b-modal v-model="showModal" :title="modalTitle" modal-class="custom-modal myModal" dialog-class="slide-in-right"
         hide-footer>
@@ -77,6 +81,7 @@
           <b-button type="submit" variant="primary" class="my-4">Invia Messaggio</b-button>
         </form>
       </b-modal>
+
     </div>
   </div>
 </template>
@@ -103,7 +108,10 @@ export default {
         body: ''
       },
       showModal: false,
-      emailError: null
+      emailError: null,
+      showToast: false,
+      toastTitle: '',
+      toastMessage: ''
     };
   },
   computed: {
@@ -127,14 +135,24 @@ export default {
     },
     sendMessage() {
       if (this.emailError) {
-        alert('Correggi gli errori nel modulo.');
+        this.toastTitle = 'Errore';
+        this.toastMessage = 'Correggi gli errori nel modulo.';
+        this.showToast = true;
         return;
       }
+      // Logica per l'invio del messaggio
+      // Esempio: chiamata API per inviare il messaggio
+
+      // Mostra il toast di successo
+      this.toastTitle = 'Successo';
+      this.toastMessage = 'Messaggio inviato con successo.';
+      this.showToast = true;
+
+
       // Invia il messaggio al back end (Laravel)
       axios.post(`${this.store.apiBaseUrl}apartments/${this.slug}/send-message`, this.message)
         .then(response => {
           console.log(response);
-          alert('Messaggio inviato con successo!');
           this.message = { name: '', surname: '', email: '', body: '' }; // Pulisce il form dopo l'invio
           this.showModal = false;
         })
