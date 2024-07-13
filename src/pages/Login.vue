@@ -1,5 +1,6 @@
 <template>
-    <div class="w-100 h-100">
+    <div class="my-container"
+    style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
         <div class="container">
             <div class="apartment-details brutalist-card mt-2">  
                 <h1 class="pb-3 text-center">Benvenuto!</h1>
@@ -24,6 +25,9 @@
 </script>
 
 <style lang="scss" scoped>
+.my-container{
+  height: 100vh;
+}
         .container{
         padding-top: 200px;
     }
