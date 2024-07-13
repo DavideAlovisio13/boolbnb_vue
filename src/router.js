@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from './pages/Home.vue';
 import Structures from './pages/Structures.vue';
 import AboutUs from './pages/AboutUs.vue';
-import Contacts from './pages/Contacts.vue';
+import Login from './pages/Login.vue';
 import Search from './pages/Search.vue';
 import ApartmentDetailComponent from './pages/ApartmentDetailComponent.vue';
 
@@ -25,9 +25,9 @@ const router = createRouter({
             component: AboutUs,
         },
         {
-            path: '/contacts',
-            name: 'contacts',
-            component: Contacts,
+            path: '/accedi',
+            name: 'accedi',
+            component: Login,
         },
         {
             path: '/search/:query/:lat/:lon',
