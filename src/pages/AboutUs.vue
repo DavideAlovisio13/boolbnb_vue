@@ -2,31 +2,39 @@
     <div class="my-container"
     style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
     <div class="container">
-    <div class="apartment-details brutalist-card mt-2">       
-        <section class="hero">
-      <h1>Scopri Boolbnb</h1>
-      <p>Connettiamo viaggiatori con alloggi unici in tutto il mondo.</p>
+    <div class="apartment-details brutalist-card mt-2"> 
+
+    <section class="hero">    
+        <h1 class="d-flex align-items-center justify-content-center"> <i class="fa-solid fa-earth-americas pe-2"></i>Scopri Boolbnb</h1>
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <span>Connettiamo viaggiatori con alloggi unici in tutto il mondo.</span>
+        </div>
     </section>
-    
+
     <section class="mission">
-      <h2>La nostra missione</h2>
-      <p>Offrire esperienze di viaggio autentiche e memorabili, sostenendo le economie locali.</p>
+           <h4> <i class="fa-solid fa-plane pe-2"></i>
+             La nostra missione</h4>
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <span> Offrire esperienze di viaggio autentiche e memorabili, sostenendo le economie locali.</span>
+        </div>
     </section>
     
     <section class="values">
-      <h2>I nostri valori</h2>
-      <div class="value-card">
-        <h3>Affidabilità</h3>
-        <p>Garantiamo sicurezza e fiducia per ogni prenotazione.</p>
-      </div>
-      <div class="value-card">
-        <h3>Ospitalità</h3>
-        <p>Accogliamo i nostri ospiti con calore e professionalità.</p>
-      </div>
-      <div class="value-card">
-        <h3>Sostenibilità</h3>
-        <p>Promuoviamo pratiche rispettose dell'ambiente.</p>
-      </div>
+        <h2 class="pb-3">I nostri valori</h2> 
+        <h4> <i class="fa-solid fa-shield-halved pe-2"></i>Affidabilità</h4>
+        <div class="d-flex align-items-center justify-content-center pb-3">  
+            <span>Garantiamo sicurezza e fiducia per ogni prenotazione.</span >
+        </div>
+
+        <h4><i class="fa-regular fa-handshake pe-2"></i>Ospitalità</h4>
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <span>Accogliamo i nostri ospiti con calore e professionalità.</span>
+        </div>
+
+        <h4><i class="fa-solid fa-seedling pe-2"></i>Sostenibilità</h4>
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <span>Promuoviamo pratiche rispettose dell'ambiente.</span>
+        </div>
     </section>
 </div>
 </div>
@@ -41,23 +49,21 @@
 
 <style lang="scss" scoped>
     .my-container{
-    height: 100vh;
+    height: 100%;
     }
     .container{
         padding-top: 200px;
+        padding-bottom: 100px;
     }
-    h1, h2, h3 {
+    h2, h4, span {
       color: black;
+      text-align: center;
     }
-    h2 span {
-      color: #333;
-      font-weight: normal;
+    h1{
+        font-weight: bold;
+        color: #E9B50D ;
+        text-shadow: 1px 2px 2px rgba(145, 142, 142, 0.7);
     }
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-   
     .brutalist-card {
   width: 75%;
   margin: 0 auto;
