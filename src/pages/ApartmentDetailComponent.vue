@@ -14,6 +14,13 @@
           <p class="fs-4"><strong><i class="fa-solid fa-bath"></i>:</strong> {{ apartment.num_bathrooms }}</p>
           <p class="fs-4"><strong><i class="fa-solid fa-ruler"></i>:</strong> {{ apartment.square_meters }} m²</p>
           <p class="fs-4"><strong><i class="fa-solid fa-location-dot"></i>:</strong> {{ apartment.address }}</p>
+          <h2 class="border-bottom border-black border-1 mb-5 pb-2 text-uppercase fw-bold"><strong>Servizi</strong></h2>
+          <div class="d-flex align-items-center justify-content-start flex-wrap">
+            <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
+              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt="" class="icon-img"></span>
+              : {{ apartment.name }}
+            </p>
+          </div>
         </div>
         <div class="right" v-if="apartment.cover_image">
           <img v-if="apartment.cover_image" :src="imageUrl" :alt="apartment.name" class="apartment-image">
@@ -22,13 +29,6 @@
       <div v-if="apartment.name" class="apartment-message">
         <h2 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">Mappa</h2>
         <div class="row my-4">
-          <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
-            <h3>Servizi</h3>
-            <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
-              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt="" class="icon-img"></span>
-              : {{ apartment.name }}
-            </p>
-          </div>
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <MapComponent :apartment="apartment" />
           </div>
@@ -183,7 +183,9 @@ export default {
 }
 
 .icon-img {
-  width: 2rem;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .brutalist-card {

@@ -41,7 +41,7 @@ export default {
                     setTimeout(() => {
                         this.animateCards();
                     }, 1000);
-                    
+
                 });
             })
         },

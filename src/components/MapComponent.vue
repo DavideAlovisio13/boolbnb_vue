@@ -50,7 +50,7 @@ export default {
                     key: '88KjpqU7nmmEz3D6UYOg0ycCp6VqtdXI', // Sostituisci con la tua API Key TomTom
                     container: this.$refs.map, // Utilizza il riferimento al div della mappa
                     center: [longitude, latitude], // Imposta il centro della mappa sulle coordinate date
-                    zoom: 10 // Livello di zoom iniziale della mappa
+                    zoom: 1 // Livello di zoom iniziale della mappa
                 });
 
                 // Aggiungi un marker alla posizione dell'appartamento
