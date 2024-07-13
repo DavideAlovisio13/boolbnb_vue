@@ -30,6 +30,13 @@
         <h2 class="apartment-title brutalist-card__alert border-bottom border-black border-1 mb-5 pb-2">Mappa</h2>
         <div class="row my-4">
           <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
+            <h3>Servizi</h3>
+            <p class="fs-4 text-black" v-for="(apartment, index) in apartment.services" :key="index">
+              <span><img :src="`http://127.0.0.1:8000/${apartment.icon}`" alt="" class="icon-img"></span>
+              : {{ apartment.name }}
+            </p>
+          </div>
+          <div class="col-12 mt-md-4 mt-sm-4 custom-col container-fluid">
             <MapComponent :apartment="apartment" />
           </div>
           <b-toast id="message-toast" v-model="showToast" :title="toastTitle" variant="success" auto-hide-delay="10000" class="mt-3">
@@ -127,12 +134,21 @@ export default {
   },
   methods: {
     fetchApartmentDetails() {
-      fetch(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
-        .then(response => response.json())
-        .then(data => {
-          this.apartment = data.results;
-        });
-    },
+    fetch(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
+      .then(response => response.json())
+      .then(data => {
+        this.apartment = data.results;
+
+        // Traccia la visualizzazione dell'appartamento
+        axios.post(`http://127.0.0.1:8000/api/apartment/${this.apartment.id}/view`)
+          .then(response => {
+            console.log('Visualizzazione tracciata con successo:', response.data);
+          })
+          .catch(error => {
+            console.error('Errore durante il tracciamento della visualizzazione:', error);
+          });
+      });
+  },
     sendMessage() {
       if (this.emailError) {
         this.toastTitle = 'Errore';
