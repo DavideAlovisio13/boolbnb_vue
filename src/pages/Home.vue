@@ -25,7 +25,7 @@
                             <!-- Card Component for Each Apartment -->
                             <CardApComponent :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"
-                                :is_sponsored="item.is_sponsored" />
+                                :is_sponsored="item.is_sponsored" :messages="item.messages_count" />
                         </div>
                     </div>
                 </div>
