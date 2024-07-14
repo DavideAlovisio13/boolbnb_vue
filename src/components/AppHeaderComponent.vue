@@ -6,11 +6,22 @@
             <div class="shadow__nav"></div>
             <div class="input__search">
                 <!-- Navigation Items -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row justify-content-around align-items-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row flex-wrap justify-content-around align-items-center">
                     <li class="nav-item input__button__shadow" v-for="(item, index) in navItems" :key="index">
                         <router-link :to="{ name: item.routeName }" class="nav-link">{{ item.name }}</router-link>
                     </li>
                 </ul>
+                <div class="dropdown ">
+                    <button class="btn btn-warning input__button__shadow" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-bars fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu" style="color: black; background-color: #e9b50b;">
+                        <li class="" v-for="(item, index) in navItems" :key="index">
+                            <router-link :to="{ name: item.routeName }" class="nav-link text-black">{{ item.name }}</router-link>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -160,5 +171,25 @@ export default {
     transform: translateZ(50px);
     z-index: 4;
     border: 2px solid #000;
+}
+
+//media query 
+
+@media (max-width: 576px) {
+    .dropdown {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .nav-item {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    .dropdown {
+        display: none;
+    }
 }
 </style>
