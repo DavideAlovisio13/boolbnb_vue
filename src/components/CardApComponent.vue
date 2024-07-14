@@ -100,6 +100,7 @@ export default {
 
 .brutalist-card {
     width: 350px;
+    height: 600px;
     border: 4px solid #000;
     background-color: #fff;
     padding: 1.5rem;
@@ -155,7 +156,9 @@ export default {
 
 .brutalist-card__image {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
+    overflow: hidden;
     margin-bottom: 1rem;
 }
 
