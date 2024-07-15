@@ -1,5 +1,5 @@
 <template>
-  <video src="/videos/video-main.mp4" autoplay loop muted
+  <video src="/videos/Beige.mp4" autoplay loop muted
     style=" position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%"></video>
   <div class="container h-100">
     <div class="apartment-details brutalist-card mt-2">

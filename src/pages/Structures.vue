@@ -1,6 +1,8 @@
 <template>
-    <section class=""
-        style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
+    <section class="w-100 h-100">
+        <video src="/videos/Beige.mp4" autoplay loop muted
+            style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
+        </video>
         <div class="top-card">
             <div class="card">
                 <span class="card__title">Le nostre strutture</span>
@@ -45,15 +47,6 @@ export default {
 
                 });
             })
-        },
-        animateCards() {
-            gsap.from(".card-ap", {
-                opacity: 0,
-                y: 50,
-                duration: 5,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
         },
     },
     mounted() {

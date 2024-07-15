@@ -110,7 +110,7 @@ export default {
 
 .brutalist-card {
     width: 350px;
-    height: 600px;
+    height: 650px;
     border: 4px solid #000;
     background-color: #fff;
     padding: 1.5rem;
