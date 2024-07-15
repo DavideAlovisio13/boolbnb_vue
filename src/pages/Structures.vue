@@ -10,7 +10,7 @@
         </div>
         <div class="container text-center">
             <div class="row">
-                <div class="col-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.apartments" :key="index">
+                <div class="col-12 col-md-6 col-xl-4 pb-5 d-flex justify-content-center" v-for="(item, index) in store.apartments" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                         :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
                 </div>
@@ -41,12 +41,9 @@ export default {
             axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
                 this.store.apartments = response.data.results;
                 console.log(this.store.apartments);
-                this.$nextTick(() => {
-                    setTimeout(() => {
-                        this.animateCards();
-                    }, 1000);
 
-                });
+            }).catch((error) => {
+                console.error('API error:', error);
             })
         },
     },
@@ -107,5 +104,19 @@ export default {
 
 .card:hover .card__title::after {
     transform: translateX(0);
+}
+
+
+
+@media (max-width: 576px) {
+    .card {
+        width: 400px;
+    }
+    .card__title {
+        font-size: 28px;
+    }
+    .container{
+    padding-top: 50px !important; 
+}
 }
 </style>

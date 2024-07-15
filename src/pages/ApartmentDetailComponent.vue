@@ -440,5 +440,13 @@ textarea {
   }
 }
 
-@media 
+@media (max-width : 992px){
+  .top {
+    flex-wrap: wrap;
+  }
+
+  .apartment-image {
+    box-shadow: 2px 5px 0 #000;;
+  }
+}
 </style>

@@ -7,7 +7,7 @@
                 <div class="option">
                     <input class="input" type="radio" name="btn" value="option1" checked="">
                     <div class="btn">
-                        <span class="span">Sponsored</span>
+                        <span class="span">Sponsor</span>
                     </div>
                 </div>
             </div>

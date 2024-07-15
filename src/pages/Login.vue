@@ -3,7 +3,7 @@
     style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
     <div class="container">
       <div class="apartment-details brutalist-card mt-2">
-        <h2 class=" text-center pt-3">Accedi e inserisci il tuo appartamento</h2>
+        <h2 class=" text-center pt-3">Accedi per vedere i tuoi appartamenti</h2>
         <div class="d-flex justify-content-center">
           <a href="http://127.0.0.1:8000/login" class="btn nav-item input__button__shadow">Login</a>
         </div>
