@@ -54,14 +54,6 @@ export default {
         }
     },
     methods: {
-        // getApartments() {
-        //     axios.get('http://127.0.0.1:8000/api/apartments/base').then((response) => {
-        //         this.store.apartments = response.data.results;
-        //         //console.log('Apartments:', this.store.apartments);
-        //     }).catch((error) => {
-        //         console.error('API error:', error);
-        //     });
-        // },
         getSponsored() {
             this.store.sponsored = [];
             axios.get(`${this.store.apiBaseUrl}apartments/sponsored`).then((response) => {
