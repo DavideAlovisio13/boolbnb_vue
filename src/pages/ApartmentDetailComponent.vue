@@ -440,5 +440,9 @@ textarea {
   }
 }
 
-@media 
+@media (max-width : 992px){
+  .top {
+    flex-wrap: wrap;
+  }
+}
 </style>
