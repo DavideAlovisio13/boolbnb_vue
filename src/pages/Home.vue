@@ -24,9 +24,9 @@
                         <!-- Loop through Sponsored Apartments -->
                         <div class="col-sm-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.sponsored" :key="index">
                             <!-- Card Component for Each Apartment -->
-                            <CardApComponent :apartment="item" :index="index" :title="item.name"
+                            <CardApComponent v-if="item.visible" :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"
-                                :is_sponsored="item.is_sponsored" :messages="item.messages_count" />
+                                :is_sponsored="item.is_sponsored" />
                         </div>
                     </div>
                 </div>
