@@ -42,6 +42,7 @@ export default {
         // Method to animate the quote text
         animateQuote() {
             const quoteText = document.getElementById('quote');
+        if(quoteText){
             const phrase = this.phrases[this.currentPhraseIndex];
             const chars = phrase.split('');
             quoteText.innerHTML = chars.map(char => `<span class="char">${char}</span>`).join('');
@@ -58,6 +59,8 @@ export default {
                 { opacity: 0, y: -50, scale: 0.8, stagger: 0.05, ease: "power3.in" },
                 "+=2" // Waits 2 seconds before starting the fade out
             );
+        }
+            
         },
         // Method to change the current phrase and re-trigger the animation
         changePhrase() {
