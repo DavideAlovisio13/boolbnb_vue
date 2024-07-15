@@ -22,7 +22,7 @@
                 <div class="container text-center">
                     <div class="row ">
                         <!-- Loop through Sponsored Apartments -->
-                        <div class="col-sm-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.sponsored" :key="index">
+                        <div class="col-sm-12 col-md-6 col-xl-4 py-5 d-flex justify-content-center" v-for="(item, index) in store.sponsored" :key="index">
                             <!-- Card Component for Each Apartment -->
                             <CardApComponent v-if="item.visible" :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"
