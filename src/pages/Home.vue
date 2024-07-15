@@ -3,9 +3,9 @@
     <JumboComponent />
 
     <!-- Main Section with Background Video -->
-    <section id="home_main" class="template-bg position-relative h-100 w-100">
+    <section id="home_main" class=" h-100 w-100">
         <!-- Background Video -->
-        <video src="/videos/video-main.mp4" autoplay loop muted
+        <video src="/videos/Beige.mp4" autoplay loop muted
             style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
         </video>
         

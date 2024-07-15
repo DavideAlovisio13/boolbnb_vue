@@ -2,6 +2,16 @@
     <!-- Card Component -->
     <div class="brutalist-card" :class="{ 'brutalist-card--sponsored': sponsored }">
         <!-- Card Header -->
+        <div v-if="apartment.sponsors">
+            <div class="wrapper">
+                <div class="option">
+                    <input class="input" type="radio" name="btn" value="option1" checked="">
+                    <div class="btn">
+                        <span class="span">Sponsored</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="brutalist-card__header">
             <div class="brutalist-card__alert">{{ title }}</div>
         </div>
@@ -43,7 +53,7 @@
                         <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5"
                             d="M16 10H16.01M12 10H12.01M8 10H8.01M3 10C3 4.64706 5.11765 3 12 3C18.8824 3 21 4.64706 21 10C21 15.3529 18.8824 17 12 17C11.6592 17 11.3301 16.996 11.0124 16.9876L7 21V16.4939C4.0328 15.6692 3 13.7383 3 10Z">
                         </path>
-                    </svg>{{apartment.messages_count}}</div>
+                    </svg>{{ apartment.messages_count }}</div>
                 <!-- Likes -->
                 <div><svg fill="#000000" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-2.5 0 32 32">
                         <path fill="#000000"
@@ -359,5 +369,63 @@ export default {
     bottom: 85px;
     left: 50%;
     margin-left: 56px;
+}
+
+.wrapper {
+    --font-color-dark: #323232;
+    --font-color-light: #FFF;
+    --bg-color: #fff;
+    --main-color: #323232;
+    position: relative;
+    width: 102px;
+    height: 36px;
+    background-color: var(--bg-color);
+    border: 2px solid var(--main-color);
+    border-radius: 34px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: 4px 4px var(--main-color);
+}
+
+.option {
+    width: 95px;
+    height: 28px;
+    position: relative;
+    top: 2px;
+    left: 2px;
+    padding-right: 4px;
+
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    appearance: none;
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.span {
+    color: var(--font-color-dark);
+}
+
+.input:checked+.btn {
+    background-color: var(--main-color);
+}
+
+.input:checked+.btn .span {
+    color: var(--font-color-light);
 }
 </style>
