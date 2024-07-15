@@ -4,10 +4,10 @@
     <div class="container">
       <div class="apartment-details brutalist-card mt-2">
 
-        <section class="hero">
-          <h1 class="d-flex align-items-center justify-content-center"> <i
-              class="fa-solid fa-earth-americas pe-2"></i>Scopri Boolbnb</h1>
-          <div class="d-flex align-items-center justify-content-center pb-3">
+        <section class="hero ">
+          <h1 class="d-flex align-items-center justify-content-center text-center"> <i
+              class="fa-solid fa-earth-americas pe-2 text-center"></i>Scopri Boolbnb</h1>
+          <div class="d-flex align-items-center justify-content-center pt-3">
             <span>Connettiamo viaggiatori con alloggi unici in tutto il mondo.</span>
           </div>
         </section>
@@ -15,25 +15,25 @@
         <section class="mission">
           <h4> <i class="fa-solid fa-plane pe-2"></i>
             La nostra missione</h4>
-          <div class="d-flex align-items-center justify-content-center pb-3">
+          <div class="d-flex align-items-center justify-content-center">
             <span> Offrire esperienze di viaggio autentiche e memorabili, sostenendo le economie locali.</span>
           </div>
         </section>
 
         <section class="values">
-          <h2 class="pb-3">I nostri valori</h2>
+          <h2>I nostri valori</h2>
           <h4> <i class="fa-solid fa-shield-halved pe-2"></i>Affidabilità</h4>
-          <div class="d-flex align-items-center justify-content-center pb-3">
+          <div class="d-flex align-items-center justify-content-center ">
             <span>Garantiamo sicurezza e fiducia per ogni prenotazione.</span>
           </div>
 
           <h4><i class="fa-regular fa-handshake pe-2"></i>Ospitalità</h4>
-          <div class="d-flex align-items-center justify-content-center pb-3">
+          <div class="d-flex align-items-center justify-content-center">
             <span>Accogliamo i nostri ospiti con calore e professionalità.</span>
           </div>
 
           <h4><i class="fa-solid fa-seedling pe-2"></i>Sostenibilità</h4>
-          <div class="d-flex align-items-center justify-content-center pb-3">
+          <div class="d-flex align-items-center justify-content-center">
             <span>Promuoviamo pratiche rispettose dell'ambiente.</span>
           </div>
         </section>
@@ -64,13 +64,21 @@ span {
   color: black;
   text-align: center;
 }
+span{
+  padding-bottom: 35px;
+}
 
 h1 {
   font-weight: bold;
   color: #E9B50D;
   text-shadow: 1px 2px 2px rgba(145, 142, 142, 0.7);
 }
-
+h2 {
+  font-weight: bold;
+  padding: 0px 0px 25px 0px;
+  color: #E9B50D;
+  text-shadow: 1px 2px 2px rgba(145, 142, 142, 0.7);
+}
 .brutalist-card {
   width: 75%;
   margin: 0 auto;
@@ -151,5 +159,10 @@ h1 {
 .brutalist-card__button:active {
   transform: translate(5px, 5px);
   box-shadow: none;
+}
+@media(max-width: 578px){
+  span{
+    padding-bottom: 15px;
+  }
 }
 </style>
