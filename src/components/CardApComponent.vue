@@ -44,10 +44,6 @@
         <div class="stats pt-2">
             <div>
                 <!-- Date -->
-                <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-width="2" d="M12 8V12L15 15"></path>
-                        <circle stroke-width="2" r="9" cy="12" cx="12"></circle>
-                    </svg>Feb 24</div>
                 <!-- Comments -->
                 <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5"
