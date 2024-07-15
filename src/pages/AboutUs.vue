@@ -1,6 +1,6 @@
 <template>
   <div class="my-container"
-    style="background-image: url(/images/bg-main.png); background-repeat: no-repeat; background-size: cover">
+    style="background-image: url(/images/bg-main.png); background-repeat: repeat; background-size: cover">
     <div class="container">
       <div class="apartment-details brutalist-card mt-2">
 

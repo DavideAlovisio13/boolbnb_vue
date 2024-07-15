@@ -75,7 +75,6 @@ export default {
 #home_main {
     height: calc(100% - 1000px);
 
-
     ::-webkit-scrollbar {
         display: none;
     }
