@@ -116,6 +116,7 @@ export default {
 
 .brutalist-card--sponsored {
     width: 350px;
+    height: 600px;
     border: 4px solid #000;
     background-color: #e9b50b;
     padding: 1.5rem;

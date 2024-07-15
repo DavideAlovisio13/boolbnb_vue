@@ -17,5 +17,3 @@ app.component('BModal', BModal);
 app.mount('#app');
 
 
-
-

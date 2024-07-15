@@ -8,9 +8,10 @@
         <video src="/videos/video-main.mp4" autoplay loop muted
             style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
         </video>
+        
 
         <!-- Sponsored Apartments Section -->
-        <div id="sponsor" class="pt-5">
+        <div id="sponsor" class="pt-5 mx-auto">
             <!-- Title Card -->
             <div class="card">
                 <span class="card__title">Sponsorizzati</span>
@@ -21,7 +22,7 @@
                 <div class="container text-center">
                     <div class="row ">
                         <!-- Loop through Sponsored Apartments -->
-                        <div class="col-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.sponsored" :key="index">
+                        <div class="col-sm-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.sponsored" :key="index">
                             <!-- Card Component for Each Apartment -->
                             <CardApComponent :apartment="item" :index="index" :title="item.name"
                                 :image="item.cover_image" :num_rooms="item.num_rooms" :num_beds="item.num_beds"

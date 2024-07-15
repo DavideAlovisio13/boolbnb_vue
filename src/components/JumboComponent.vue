@@ -6,6 +6,9 @@
             style="position:absolute; z-index:-1; object-fit: cover; width: 100%; height: 100%;"></video>
         <!-- Quote container -->
         <div id="quote" class="px-4 mb-5"></div>
+        <div class="px-4 mb-5 quote-query">
+            <h1>Cerca, prenota e rilassati</h1>
+        </div>
         <!-- Masthead content with search component -->
         <div class="masthead-content">
             <div class="container px-5 d-flex justify-content-center align-items-center">
@@ -79,6 +82,18 @@ export default {
     text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000, 2px 2px 5px #000;
 }
 
+.quote-query {
+
+    h1 {
+        font-size: 5.5rem;
+        font-family: "Courier New", monospace;
+        font-style: italic;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000, 2px 2px 5px #000;
+    }
+}
+
 /* Styling for the masthead container */
 .masthead {
     width: 100%;
@@ -92,6 +107,22 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .quote-query {
+        display: block;
+    }
+
+    #quote {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .quote-query {
+        display: none;
     }
 }
 </style>
