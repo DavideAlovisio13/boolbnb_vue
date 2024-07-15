@@ -37,6 +37,7 @@ export default {
         getApartments() {
             axios.get('http://127.0.0.1:8000/api/apartments').then((response) => {
                 this.store.apartments = response.data.results;
+                console.log(this.store.apartments);
                 this.$nextTick(() => {
                     setTimeout(() => {
                         this.animateCards();
