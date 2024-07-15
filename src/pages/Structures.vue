@@ -1,7 +1,7 @@
 <template>
-    <section class="w-100 h-100">
+    <section class="w-100 vh-100 overflow-auto">
         <video src="/videos/Beige.mp4" autoplay loop muted
-            style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
+            style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 20%">
         </video>
         <div class="top-card">
             <div class="card">
@@ -32,7 +32,8 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            
         }
     },
     methods: {
