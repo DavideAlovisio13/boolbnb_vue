@@ -27,7 +27,7 @@
             <!-- Number of Rooms Filter -->
             <div class="d-flex flex-column">
                 <label for="num_rooms">Numero camere</label>
-                <select name="num_rooms" id="num_rooms" v-model="num_rooms">
+                <select name="num_rooms" id="num_rooms" v-model="num_rooms" class="form-select">
                     <option value="all">Qualsiasi</option>
                     <option value="1">1 camera</option>
                     <option value="2">2 camere</option>
@@ -40,7 +40,7 @@
             <!-- Number of Beds Filter -->
             <div class="d-flex flex-column">
                 <label for="num_beds">Numero letti</label>
-                <select name="num_beds" id="num_beds" v-model="num_beds">
+                <select name="num_beds" id="num_beds" v-model="num_beds" class="form-select">
                     <option value="all">Qualsiasi</option>
                     <option value="1">1 posto letto</option>
                     <option value="2">2 posti letto</option>

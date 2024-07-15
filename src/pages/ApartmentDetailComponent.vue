@@ -127,12 +127,20 @@ export default {
   },
   methods: {
     fetchApartmentDetails() {
-      fetch(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
-        .then(response => response.json())
-        .then(data => {
-          this.apartment = data.results;
-        });
-    },
+    fetch(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
+      .then(response => response.json())
+      .then(data => {
+        this.apartment = data.results;
+        // Traccia la visualizzazione dell'appartamento
+        axios.post(`http://127.0.0.1:8000/api/apartment/${this.apartment.id}/view`)
+          .then(response => {
+            console.log('Visualizzazione tracciata con successo:', response.data);
+          })
+          .catch(error => {
+            console.error('Errore durante il tracciamento della visualizzazione:', error);
+          });
+      });
+  },
     sendMessage() {
       if (this.emailError) {
         this.toastTitle = 'Errore';
