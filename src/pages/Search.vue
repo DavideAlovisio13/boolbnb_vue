@@ -12,7 +12,7 @@
         <h4 class="fs-2 pt-3" style="font-family: 'Courier New', monospace; font-weight: bold;">Servizi</h4>
 
         <!-- Services Buttons -->
-        <div class="d-flex justify-content-between align-items-start pt-3">
+        <div class="d-flex justify-content-between align-items-start my-3 services-container">
             <button v-for="(service, index) in services" :key="index"
                 :class="{ 'selected-service': selectedServiceId.includes(service.id) }"
                 class="service-item w-25 btn-ser d-flex flex-column align-items-center justify-content-start"
@@ -24,10 +24,9 @@
             </button>
         </div>
 
-        <!-- Filter Options -->
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="row row-gap-5">
             <!-- Number of Rooms Filter -->
-            <div class="d-flex flex-column">
+            <div class=" col-6 col-md-3 d-flex flex-column">
                 <label for="num_rooms">Numero camere</label>
                 <select name="num_rooms" id="num_rooms" v-model="num_rooms" class="form-select">
                     <option value="all">Qualsiasi</option>
@@ -40,7 +39,7 @@
             </div>
 
             <!-- Number of Beds Filter -->
-            <div class="d-flex flex-column">
+            <div class="col-6 col-md-3 d-flex flex-column">
                 <label for="num_beds">Numero letti</label>
                 <select name="num_beds" id="num_beds" v-model="num_beds" class="form-select">
                     <option value="all">Qualsiasi</option>
@@ -53,7 +52,7 @@
             </div>
 
             <!-- Distance Filter -->
-            <div class="d-flex flex-column">
+            <div class="col-6 col-md-3 d-flex flex-column">
                 <label for="distance">Distanza</label>
                 <input type="range" v-model="distance" name="distance" id="distance" min="3" max="50" value="20"
                     step="1">
@@ -61,10 +60,13 @@
             </div>
 
             <!-- Apply Filters Button -->
-            <button @click="getAdvancedSearchResults">
-                <span class="button_top">Applica i filtri</span>
-            </button>
+            <div class="col-6 col-md-3">
+                <button @click="getAdvancedSearchResults">
+                    <span class="button_top">Applica i filtri</span>
+                </button>
+            </div>
         </div>
+
 
         <!-- Number of Results -->
         <p class="py-5" style="font-family: 'Courier New', monospace; font-weight: bold;">Numero di risultati: {{
@@ -72,7 +74,8 @@
 
         <!-- Apartments Cards -->
         <div class="row ">
-            <div class="col-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in allApartments" :key="index">
+            <div class="col-12 col-md-6 col-xl-4 py-5 d-flex justify-content-center"
+                v-for="(item, index) in allApartments" :key="index">
                 <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                     :num_rooms="item.num_rooms" :num_beds="item.num_beds" :class="['bg-warning', 'sponsored']"
                     :distance="item.distance" />
@@ -342,5 +345,12 @@ button:active .button_top {
 
 .container {
     padding-top: 200px;
+}
+
+@media (max-width: 1200px) {
+    .services-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 </style>
