@@ -2,7 +2,7 @@
     <!-- Card Component -->
     <div class="brutalist-card" :class="{ 'brutalist-card--sponsored': sponsored }">
         <!-- Card Header -->
-        <div v-if="apartment.sponsors">
+        <div v-if="apartment.sponsors" class="w-100 d-flex justify-content-end mb-3">
             <div class="wrapper">
                 <div class="option">
                     <input class="input" type="radio" name="btn" value="option1" checked="">
