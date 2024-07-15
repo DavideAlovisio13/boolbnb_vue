@@ -10,7 +10,7 @@
         </div>
         <div class="container text-center">
             <div class="row">
-                <div class="col-12 col-md-6 col-xl-4 py-5" v-for="(item, index) in store.apartments" :key="index">
+                <div class="col-12 col-md-6 col-xl-4 py-5 d-flex justify-content-center" v-for="(item, index) in store.apartments" :key="index">
                     <CardApComponent :apartment="item" :index="index" :title="item.name" :image="item.cover_image"
                         :num_rooms="item.num_rooms" :num_beds="item.num_beds" />
                 </div>
